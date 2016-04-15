@@ -1,0 +1,12 @@
+You walk up the driveway and approach the manor's Gate.  The Gate is an ancient, 
+iron-wrought monstrosity but there is no gatehouse.  Through the Gate you can see the 
+Front Lawn and Porch to the North.
+
+%look
+The Gate is an ancient, iron-wrought monstrosity but there is no gatehouse.  Through the 
+Gate you can see the Front Lawn and Porch to the North.
+%open
+The gate is flaking with rust and reeks of iron, but it's unlocked you're able to push 
+it open. 
+%go
+North frontLawn

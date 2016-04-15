@@ -1,0 +1,20 @@
+You park your car outside the high, ivy-covered walls of Summerworth Manor. The Dossier
+from the police and your Cellphone are on the seat next to you, as well as a Dog-Eared
+Horror Novel you were reading during your last stakeout.
+
+To your North is the driveway and gated entrance to the manor.
+
+%look
+You see the unlocked passenger side glove box
+%open
+Inside the glove box you see your S&W 9MM, an Ammo Clip, and your Flashlight
+%take
+Dossier
+Cellphone
+Dog-Eared Horror Novel
+S&W 9MM
+Ammo Clip
+Flashlight
+%go
+North driveway
+
