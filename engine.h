@@ -17,9 +17,6 @@
 
 #define DESCBUFFER 1024 // limit descriptions to 1024 characters.
 #define TOKENBUFFER 256 // limit the buffer to 256 characters. if Buffer is greater than, alert user to use simpler commands.
-#define MAXWTLIMIT 60 // maximum weight you can carry
-#define COMMANDHASHSIZE 26 * 26 + 1;
-
 
 class Creature	// Base class for all creatures.
 {
@@ -47,7 +44,7 @@ public:
 };
 
 
-class Object  // we will break down some of these into the subclasses of object
+class object  // we will break down some of these into the subclasses of object
 {
 private:
 
@@ -73,19 +70,7 @@ public:
 	void dropItem(string itemName); // removes from the player inventory 
 };
 
-class Player
-{
-public:
-	~Player()
-	~Player();
 
-private:
-	string name;
-	int genderMF; // male = 0, female = 1
-	int currentCarryWeight;
-
-	bool onQuest; 
-}
 
 class WorldEngine
 {
@@ -96,10 +81,10 @@ private:
 	int score;
 	int moves;
 	int moveValue;
+    int sanity;
+    int health;
 
 	string dirName;
-
-	// game state.
 
 	bool mysteryStarted;
 	bool horrorDead;
@@ -109,45 +94,15 @@ private:
 	bool gameOver;
 	bool gameWon;
 
-	// Helper Functions
-
-	string introduction[1]; // An array containing the title card, instructions, story.
-
-	int roomItemCount;
-	vector<int> inventory;
-	vector<int> 
-
-	int currentRoom;
-	int startRoom;
-	vector<int> movesMade; 
-
-	CommandHash commandsHash[COMMANDHASHSIZE];
-	vector<Room> rooms;
-	vector<Creature> creatures;
-	vector<Object> objects; // all rooms, creatures, and items
-
-
-
 public:
 	void accessRoom(char *dirName, int roomID);
-	void playGame();
 	void newGame();		// erases the game state, resets the game.
 	void loadGame();	// loads the game state.
 	void saveGame();	// reads the game state and writes it to savefile.
-	readRoomFile(string dirName, int roomID); // reads the room file to the parser
+	readRoomFile(void playGame, string dirName); // reads the room file to the parser
 	void interface(); // contains the primary interface functions
 	void display();   // game display
-	void displayArt(std::vector<int> art, int id);  // displays art based on the game state and room. -- find the art vector and load from there.
-
-	void addObject(int id);
-	void removeObject(int id);
-	void addToInventory(int id);
-	void showInventory();
-	void setEquipped(int id;)
-
-
-
-
+	void displayArt();  // displays art based on the game state and room.
 
 };
 
