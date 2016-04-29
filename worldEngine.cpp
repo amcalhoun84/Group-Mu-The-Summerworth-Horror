@@ -7,6 +7,7 @@
 #include <fstream>
 #include "object.hpp"
 #include "worldEngine.hpp"
+#include <string>
 
 using namespace std;
 
@@ -31,10 +32,19 @@ void worldEngine::display(int roomID, worldEngine wE)
 {
 	ifstream roomData;
 	roomData.open("./rooms/" + roomID);
-
+	//display contents of room file description until sentry character % is found
+	//not yet tested or compiled!
 	if(roomData.is_open())
 	{
-		cout << "Yay room..." << endl;
+		string line;
+		//set sentry character separating room description from items/characters
+		char sentry = '%';
+		while (roomData.peek() != sentry)
+		{
+			while (getline(roomData, line))
+				cout << line << '\n';
+		}
+		//cout << "Yay room..." << endl;
 	}
 
 }
