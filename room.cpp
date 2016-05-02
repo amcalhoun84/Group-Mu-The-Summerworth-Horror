@@ -43,7 +43,11 @@ void Room::getDescription(int id)
 		}
 	}
 }
-
+void addItem(string object)  //This would involve changing item vector to string vs int which might be simpler to parse data files
+{
+	roomItems.push_back(object);
+	
+}
 void Room::displayDesc(string roomDescription)
 {
 	cout << roomDescription << '\n';
