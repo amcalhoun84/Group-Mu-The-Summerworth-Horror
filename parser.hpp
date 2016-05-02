@@ -8,19 +8,41 @@
 
 using namespace std;
 
-#include "worldEngine.hpp";
-#include "worldEngine.cpp";
+#include "worldEngine.hpp"
+#include "worldEngine.cpp"
+#include "object.hpp"
+#include "room.hpp"
+#include "player.hpp"
 
-enum cmd_type {
-	OBJECT = 0, CREATURE, NOTFOUND, NONE, DEFAULT;
 
-};
+// The en_enumerators are demonstrations for the prototype. We hope to have a dictionary of words and synonyms to work from for the final project.
+
+enum cmd_type { OBJECT = 0, CREATURE, NOTFOUND, NONE, DEFAULT };
+
+enum en_VERBS { V_TAKE, V_ATTACK, V_DROP, V_USE, V_LOOK, V_INVENTORY, V_EXAMINE, V_HELP, V_TALK, V_QUIT };
+
+// const int NOT = -1;
+
+
+const int VERBS = 10;
+
 
 class Object;
 
 class Parser
 {
-private: 
+private:
+
+    struct words
+    {
+        string word;
+        int wordID;
+
+    };
+
+   string subString;
+   vector<string> words;
+
 
 	struct PlayerInputObject
 	{
@@ -37,7 +59,8 @@ private:
 
 	// auxilliary, optional.
 	string auxnoun;
-	string preposition; 
+	string preposition;
+	char srch;
 
 	string command;
 	vector<PlayerInput> cmd_objects;
@@ -47,19 +70,23 @@ public:
 
 	Parser(string command);
 	~Parser();
-	void interpretCommand(string command);
+	void interpretCommand(noun *nouns, word *verbs, string Command, string &word1, string &word2);
+    void setVerbs(word *verbs);
 
-	Object* findDefault(vector<string> &keywords, int& itemID, string &response);
-	Object* findSpecial(vector<string> &keywords, cmd_type ct);
-	int findObject(vector <string> &keywords, vector<int> &objID, vector<Object*> &result, vector<string> &response);
 
-	bool addObject(Object* obj, string response, cmd_type ct = OBJECT);
-	bool addDefault(Object* def, string response);
-	bool isAlive(Object *obj);
+    void look(int roomID, room *rooms, word *dir, noun *nouns);
+    void take(int roomID, room *rooms, word *dir, noun *nouns);
+    void drop(int roomID, room *rooms, word *dir, noun *nouns);
+    void viewInventory(int roomID, room *rooms, word *dir, noun *nouns);
+    void use(int roomID, room *rooms, word *dir, noun *nouns);
+    void talk(int roomID, room *rooms, word *dir, noun *nouns);
+    void attack(int roomID, room *rooms, word *dir, noun *nouns);
+    void help(int roomID, room *rooms, word *dir, noun *nouns);
 
-	bool isCreature(Object *obj, string response, cmd_type ct = CREATURE);
+    void quit();
 
-	int matchKeywords(string inputcmd, Game* game);
+    bool parser(int &roomID, string word1, string word2, word *dir, word verbs, room *rooms, noun *nouns);
+
 
 
 };

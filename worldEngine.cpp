@@ -8,7 +8,6 @@
 #include "object.hpp"
 #include "worldEngine.hpp"
 
-
 using namespace std;
 
 worldEngine::worldEngine()
@@ -32,10 +31,12 @@ void worldEngine::display(int roomID, worldEngine wE)
 {
 	ifstream roomData;
 	roomData.open("./rooms/" + roomID);
+
 	if(roomData.is_open())
 	{
 		cout << "Yay room..." << endl;
 	}
+
 }
 
 void worldEngine::manual()
