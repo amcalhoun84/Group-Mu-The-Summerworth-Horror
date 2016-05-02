@@ -6,7 +6,19 @@ Room::Room(int id, WorldEngine *we)
 {
 	
 }
-
+Room::Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark)
+{
+	this->roomName = name;
+	this->roomDescription = roomDescription;
+	this->roomID = id;
+	this->north = north;
+	this->south = south;
+	this->east = east;
+	this->west = west;
+	this->indoor = indoor;
+	this->dark = dark;
+	this->roomVisited = false;
+}
 Room::~Room()
 {
 
