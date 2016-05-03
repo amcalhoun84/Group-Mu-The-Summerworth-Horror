@@ -14,6 +14,7 @@ Object::Object()
 	this->canCarry = true;
 	this->invincible = false;
 	this->indestructible = true;
+	this->usable = true;
 
 }
 

@@ -19,6 +19,7 @@ protected:
     string objName;
     string objDescription;
     string shortDesc;
+    string keywords;
 
     int itemID;     // ID for the vector functions -- will be set for each object
     int scoreValue; // what is the score you get for collecting it?
@@ -30,6 +31,7 @@ protected:
     bool invincible; // For the One Who Sleeps Only
     bool indestructible; // Can't destroy the item -- only false for certain plot items.
     bool essential;
+    bool usable;
 
 public:
 
@@ -49,6 +51,7 @@ public:
     void setInvincible(bool invinc) { this->invincible = invinc; }
     void setIndestructible(bool indest) { this->indestructible = indest; }
     void setEssential(bool essen) { this->essential = essen; }
+    void setUsable(bool setUse) { this->usable = setUse; }
 
     // Getters
 
@@ -65,6 +68,7 @@ public:
     bool getInvincible() { return this->invincible; }
     bool getIndestructible() { return this->indestructible; }
     bool getEssential() { return this->essential; }
+    bool getUsable() { return this->usable; }
 
 };
 

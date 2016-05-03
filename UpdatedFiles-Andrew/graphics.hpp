@@ -6,15 +6,16 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <unistd.h>
 #include <ncurses.h>
 #include <signal.h>
 
-#include "worldEngine.hpp"
+// #include "worldEngine.hpp"
 
-class Graphics 
+class Graphics
 {
 
-private: 
+private:
 	// no need, we just transmit images.
 
 public:
