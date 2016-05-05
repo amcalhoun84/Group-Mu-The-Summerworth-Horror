@@ -1,8 +1,13 @@
-#include "room.h"
+#include "room.hpp"
 #include <iostream>
 #include <string>
 
-using std::cout;
+using namespace std;
+
+Room::Room()
+{
+
+}
 
 Room::Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark)
 {
@@ -18,6 +23,9 @@ Room::Room(string name, string roomDescription, int id, int north, int south, in
 	this->roomVisited = false;
 }
 
+//Room::~Room()
+//{
+//}
 
 void Room::displayDesc()
 {

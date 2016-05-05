@@ -1,23 +1,23 @@
 // MuProject.cpp : Defines the entry point for the console application.
 //
 
+
+#include <ctime>
+#include <cstdlib>
 #include <stdio.h>
-#include <tchar.h>
-#include<string>
+#include <string>
 #include <iostream>
-#include<sstream>
+#include <sstream>
 #include <vector>
-#include "room.h"
+#include "object.hpp"
+#include "object.cpp"
+#include "room.hpp"
+#include "room.cpp"
+#include "graphics.cpp"
+//#include "./items/*.hpp"
+//#include "./critters/*.hpp"
 
 using namespace std;
-
-//Thanks for the helper function Andrew
-string toUpperStr(string buffer)
-{
-	for (int i = 0; i<buffer.size(); i++)
-		buffer.at(i) = toupper(buffer.at(i));
-	return buffer;
-}
 
 string getPlayerInput()
 {
@@ -30,7 +30,6 @@ string getPlayerInput()
 	{
 		cout << "Please enter a 2 word command (Verb + Noun): ";
 		getline(cin, input);
-		input = toUpperStr(input);
 		stringstream ss(input);
 	
 		while (ss >> item)
@@ -40,7 +39,7 @@ string getPlayerInput()
 		len = commands.size();
 		if (len != 2)
 		{
-			if (commands[0] == "QUIT")
+			if (commands[0] == "quit")
 			{
 				return input;
 			}
@@ -70,9 +69,9 @@ int parseCommand(string command)
 	}
 	 
 	com = commands[0];
-	if (com == "MOVE" || com == "GO")
+	if (com == "move" || com == "go")
 	{
-		filter = 100; //All 100 filters will be functions called from room objects, later player (200) and creature(300) filters will be added
+		filter = 100;
 	}
 	else
 	{
@@ -82,19 +81,19 @@ int parseCommand(string command)
 	com = commands[1];
 	if (filter == 100)
 	{
-		if (com == "NORTH")
+		if (com == "north")
 		{
 			filter = 101;
 		}
-		else if (com == "SOUTH")
+		else if (com == "south")
 		{
 			filter = 102;
 		}
-		else if (com == "EAST")
+		else if (com == "east")
 		{
 			filter = 103;
 		}
-		else if (com == "WEST")
+		else if (com == "west")
 		{
 			filter = 104;
 		}
@@ -178,14 +177,24 @@ void callFunction(vector <Room> &roomStorage, Room &room, int filter)
 	}
 }
 
-
 int main()
 {
+
+	Graphics g;
+
+	g.splashScreen();
+
+	cout << "Presents: The Summerworth Horror - project mu demo." << endl;
+
+	srand(time(NULL));
 	Room room;
 	vector<Room> roomStorage;
 
-	//sample room created by constructor - Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark)
-	Room room1 = Room("Room1", "Kitchen", 1, 2, -1, -1, -1, true, false);  //-1 indicates that the player can't go that direction
+	// Rooms are currently hard-coded to keep the secrecy of the game intact,
+	// while the primary example of this demo is to show that the engine is
+	// functional and basic actions can be done.
+
+	Room room1 = Room("Room1", "Kitchen", 1, 2, -1, -1, -1, true, false);
 	Room room2 = Room("Room2", "Living Room", 2, 3, 1, -1, -1, true, false);
 	Room room3 = Room("Room3", "Hall", 3, 4, 2, -1, -1, true, false);
 	Room room4 = Room("Room4", "Library", 4, 5, 3, -1, -1, true, false);
@@ -220,9 +229,70 @@ int main()
 	{
 		
 		input = getPlayerInput();
-		if (input == "QUIT")
+		if (input == "quit")
 		{
-			gameOver = true;
+			int randomTaunt;
+			char yesNo;
+			randomTaunt = rand() % 6;
+
+			cout <<"Are you sure you want to quit? ";
+
+			while(yesNo != 'N' && yesNo != 'n' && yesNo != 'Y' && yesNo != 'y')
+			{
+				switch(randomTaunt)
+				{
+					case 1:
+						cout << "Cowardice does not become you. ";
+						break;
+
+					case 2:
+						cout << "Scared of the dark, are we? ";
+						break;
+
+					case 3:
+						cout << "Thou wish to quit? Thou hath lost an eigth! "; // Ultima reference
+						break;
+
+					case 4:
+						cout << "Oh, so now you want to work... ";
+						break;
+
+					case 5:
+						cout << "Don't worry. You'll come crawling back. ";
+						break;
+
+					case 6:
+						cout << "Why would you want to quit this great game? ";
+						break;
+					
+					default:
+						cout << "My writer got bored and forgot to include a taunt here... ";
+						break;
+
+					}
+
+				cout << "(y/n): ";
+				cin >> yesNo;
+
+
+				if(yesNo == 'y') 
+				{
+					gameOver = true;
+					cout << "...you'll be back." << endl;
+				}
+				else if(yesNo == 'n') 
+				{
+					gameOver = false;
+					cout << endl;
+				}
+				else 
+				{
+					cout << "(y/n) only..." << endl;
+				}
+			}
+
+			cin.ignore();
+
 		}
 		else
 		{
@@ -237,4 +307,3 @@ int main()
 		
 	return 0;
 }
-
