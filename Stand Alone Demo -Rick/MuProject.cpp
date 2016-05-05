@@ -65,10 +65,11 @@ int parseCommand(string command)
 	{
 		filter = 100;
 	}
-	if (com == "quit")
+	else
 	{
+		cout << "That is an invalid command. Try again" << endl;
 		return -1;
-	}		
+	}
 	com = commands[1];
 	if (filter == 100)
 	{
@@ -215,7 +216,10 @@ int main()
 		else
 		{
 			filter = parseCommand(input);
-			callFunction(roomStorage, room, filter);
+			if (filter != -1)
+			{
+				callFunction(roomStorage, room, filter);
+			}			
 		}
 		
 	}
