@@ -10,7 +10,8 @@ int main()
 {
 	string line;
 	vector<string> roomLines;
-	ifstream roomDesc("./rooms/" + _roomid);
+	vector<string> itemLines;
+	ifstream roomDesc("demo.txt");
 	//const string sentry = "%";
 	
 	if(!roomDesc)
@@ -24,9 +25,21 @@ int main()
 		break;
 	}
 	
+	while (getline(roomDesc,line))
+	{
+		itemLines.push_back(line);
+	}
 	
 	for (int i = 0; i < roomLines.size(); i++)
 		cout << roomLines[i] << endl;
+	
+	cout << "now for the items: " << endl;
+	
+	for (int i = 0; i < itemLines.size(); i++)
+		cout << itemLines[i] << endl;
+	
+	cout << "Fin!" << endl;
+	
 	
 	return 0;
 }
