@@ -11,6 +11,14 @@
 
 using namespace std;
 
+//Thanks for the helper function Andrew
+string toUpperStr(string buffer)
+{
+	for (int i = 0; i<buffer.size(); i++)
+		buffer.at(i) = toupper(buffer.at(i));
+	return buffer;
+}
+
 string getPlayerInput()
 {
 	vector<string> commands;
@@ -22,6 +30,7 @@ string getPlayerInput()
 	{
 		cout << "Please enter a 2 word command (Verb + Noun): ";
 		getline(cin, input);
+		input = toUpperStr(input);
 		stringstream ss(input);
 	
 		while (ss >> item)
@@ -31,7 +40,7 @@ string getPlayerInput()
 		len = commands.size();
 		if (len != 2)
 		{
-			if (commands[0] == "quit")
+			if (commands[0] == "QUIT")
 			{
 				return input;
 			}
@@ -61,9 +70,9 @@ int parseCommand(string command)
 	}
 	 
 	com = commands[0];
-	if (com == "move" || com == "go")
+	if (com == "MOVE" || com == "GO")
 	{
-		filter = 100;
+		filter = 100; //All 100 filters will be functions called from room objects, later player (200) and creature(300) filters will be added
 	}
 	else
 	{
@@ -73,19 +82,19 @@ int parseCommand(string command)
 	com = commands[1];
 	if (filter == 100)
 	{
-		if (com == "north")
+		if (com == "NORTH")
 		{
 			filter = 101;
 		}
-		else if (com == "south")
+		else if (com == "SOUTH")
 		{
 			filter = 102;
 		}
-		else if (com == "east")
+		else if (com == "EAST")
 		{
 			filter = 103;
 		}
-		else if (com == "west")
+		else if (com == "WEST")
 		{
 			filter = 104;
 		}
@@ -169,12 +178,14 @@ void callFunction(vector <Room> &roomStorage, Room &room, int filter)
 	}
 }
 
+
 int main()
 {
 	Room room;
 	vector<Room> roomStorage;
 
-	Room room1 = Room("Room1", "Kitchen", 1, 2, -1, -1, -1, true, false);
+	//sample room created by constructor - Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark)
+	Room room1 = Room("Room1", "Kitchen", 1, 2, -1, -1, -1, true, false);  //-1 indicates that the player can't go that direction
 	Room room2 = Room("Room2", "Living Room", 2, 3, 1, -1, -1, true, false);
 	Room room3 = Room("Room3", "Hall", 3, 4, 2, -1, -1, true, false);
 	Room room4 = Room("Room4", "Library", 4, 5, 3, -1, -1, true, false);
@@ -209,7 +220,7 @@ int main()
 	{
 		
 		input = getPlayerInput();
-		if (input == "quit")
+		if (input == "QUIT")
 		{
 			gameOver = true;
 		}
