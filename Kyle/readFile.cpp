@@ -9,10 +9,12 @@ using namespace std;
 int main()
 {
 	string line;
-	int item;
 	vector<string> roomLines;
-	vector<int> itemLines;
-	ifstream roomDesc("demo.txt");
+	vector<string> itemLines;
+	vector<string> directLines;
+	vector<string> roomName;
+	
+	ifstream roomDesc("demoRoom.txt");
 	
 	if(!roomDesc)
 	{
@@ -24,22 +26,45 @@ int main()
 		roomLines.push_back(line);
 		break;
 	}
-	
-	while (roomDesc >> item)
+	//add items
+	while (getline(roomDesc, line, '%'))
 	{
-		itemLines.push_back(item);
+		itemLines.push_back(line);
+		break;
+	}
+	//add directions
+	while (getline(roomDesc, line, '%'))
+	{
+		directLines.push_back(line);
+		break;
+	}
+	//add room name
+	while (getline(roomDesc, line, '%'))
+	{
+		roomName.push_back(line);
+		break;
 	}
 	
-	for (int i = 0; i < roomLines.size(); i++)
-		cout << roomLines[i] << endl;
+	//display
+	cout << endl;
 	
-	cout << "now for the items: " << endl;
+	for (int i = 0; i < roomLines.size(); i++)
+		cout << roomLines[i];
+	
+	cout << "now for the items: ";
 	
 	for (int i = 0; i < itemLines.size(); i++)
-		cout << itemLines[i] << endl;
+		cout << itemLines[i];
+
+	cout << "now for the directions: ";
 	
-	cout << "Fin!" << endl;
+	for (int i = 0; i < directLines.size(); i++)
+		cout << directLines[i];
 	
+	cout << "room name: ";
+	
+	for (int i = 0; i < roomName.size(); i++)
+		cout << roomName[i];
 	
 	return 0;
 }

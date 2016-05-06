@@ -1,0 +1,14 @@
+This is the first demo room.
+Not much interesting here, this is just for testing.
+The items, direction, bool, and name listed below.
+%
+1
+9
+%
+2
+-1
+-1
+-1
+%
+Room 1
+
