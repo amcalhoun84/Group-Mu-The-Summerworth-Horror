@@ -9,10 +9,10 @@ using namespace std;
 int main()
 {
 	string line;
+	int item;
 	vector<string> roomLines;
-	vector<string> itemLines;
+	vector<int> itemLines;
 	ifstream roomDesc("demo.txt");
-	//const string sentry = "%";
 	
 	if(!roomDesc)
 	{
@@ -25,9 +25,9 @@ int main()
 		break;
 	}
 	
-	while (getline(roomDesc,line))
+	while (roomDesc >> item)
 	{
-		itemLines.push_back(line);
+		itemLines.push_back(item);
 	}
 	
 	for (int i = 0; i < roomLines.size(); i++)
