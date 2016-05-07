@@ -1,0 +1,68 @@
+Kitchen
+A dimly lit kitchen, with depressing linoleum tile.
+%
+object1
+bPhm
+%
+1
+2
+-1
+-1
+-1
+true
+false
+%
+Living Room
+A rustic 1970s style living room, with worn shag carpeting. It looks like a lot of family type stuff happened here.
+%
+blRope
+cDossier
+%
+23
+1
+-1
+-1
+true
+false
+%
+Hall
+The hall is long and it looks like a kid or bored teenager may have drawn something on the walls in the recent past. ...definitely a teenager. There's colorful obscenities about an English teacher named Mr. Davisson.
+%
+flLight
+bKnife
+%
+3
+4
+2
+-1
+-1
+true
+false
+%
+Library
+A cozy library with a ton of books. Whoever lives here is an avid reader and quite literate. It's not just dimestore novels, but heady books of physics, philosophy, computer science, and math.
+%
+desk
+bigDoor
+%
+4
+5
+3
+-1
+-1
+true
+false
+%
+Billiard Room
+Who's up for some snooker?!
+%
+armoire
+bRose
+%
+5
+-1
+4
+-1
+-1
+true
+false
