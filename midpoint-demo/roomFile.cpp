@@ -27,13 +27,13 @@ int main()
 		roomLines.push_back(line);
 		break;
 	}
-	//add items
+	//add items to vector
 	while (getline(roomDesc, line, '%'))
 	{
 		itemLines.push_back(line);
 		break;
 	}
-	//add directions
+	//add directions to vector
 	while (getline(roomDesc, line, '%'))
 	{
 		directLines.push_back(line);
@@ -46,7 +46,7 @@ int main()
 		break;
 	}
 	
-	//display
+	//display for testing of vector contents
 	cout << endl;
 	
 	for (int i = 0; i < roomLines.size(); i++)
@@ -57,12 +57,12 @@ int main()
 	for (int i = 0; i < itemLines.size(); i++)
 		cout << itemLines[i];
 
-	cout << "\nnow for the directions: ";
+	cout << "\now for the directions: ";
 	
 	for (int i = 0; i < directLines.size(); i++)
 		cout << directLines[i];
 	
-	cout << "\nroom name: ";
+	cout << "\room name: ";
 	
 	for (int i = 0; i < roomName.size(); i++)
 		cout << roomName[i];
