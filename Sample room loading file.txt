@@ -1,0 +1,108 @@
+The basic idea is that there are 10 data fields in each room. Store the data in a semi-colon separated data file something like this:
+
+order of data (room name;description;roomId;north;south;east;west;indoor;dark;roomVisited)
+
+The directions are simply the roomID # of the room that is in that direction. Put a 0 if there is no room in that direction. Boolean values for indoor, dark, and 
+roomVisited will be marked with a 1(true) or 0(false)
+
+Sample data file with info for 3 rooms:
+kitchen;place where you cook stuff;1;5;0;0;3;1;0;0;library;place where you read stuff;2;4;1;0;2;1;0;0;;library;place where you read stuff;2;4;1;0;2;1;0;0;
+
+Instead of moving info to an intermediate string vector, take the information as you parsing from the text file and put it directly in a Room object and then 
+stick the room into the vector of Room objects(which in our case is roomStorage). Then do something like this. Bear with me as this is not complete code.
+
+void createObject(Room room, vector<Room> roomStorage)
+{
+    string roomData
+    
+    ifstream roomFile("demoRoom.txt");
+
+	if(!roomFile)
+	{
+		cout << "Error opening output file" << endl;
+	}
+	
+	//This will keep track of the field number so you know which piece of room Data you are parsing
+	int counter = 0;
+	bool marker = false;
+	
+    while (getline(roomFile, roomData, ';'))
+	{
+		switch(counter)
+		{
+            //This is the room name
+            case 0:
+               room.setName(roomData);
+               break;
+            //This is the room description
+            case 1:
+                room.setDescription(roomData);
+            //This is the roomId
+            case 2:
+                room.setRoomID(stoi(roomData));  //In C++11 this will convert a string to an integer. If C++11 does not work on flip use: atoi(roomData.c_str())
+                break;
+            case 3:
+                room.setNorth(stoi(roomData));
+                break;
+            case 4:
+                room.setSouth(stoi(roomData));
+                break;
+            case 5:
+                room.setEast(stoi(roomData));
+                break;
+            case 6:
+                room.setWest(stoi(roomData));
+                break;
+            case 7:
+                if(roomData == "0")
+                {
+                    marker = false;
+                }
+                else
+                {
+                    marker = true;
+                }
+                room.setIndoor(marker);
+                break;
+            case 8:
+                if(roomData == "0")
+                {
+                    marker = false;
+                }
+                else
+                {
+                    marker = true;
+                }
+                room.setDark(marker);
+                break;
+            //The roomVisited will always be 0 starting out but I put a field in there so you can use this function to 
+            //saved files which will have different values in the rooms that have been visited.
+            case 9:
+                if(roomData == "0")
+                {
+                    marker = false;
+                }
+                else
+                {
+                    marker = true;
+                }
+                room.setVisited(marker);
+                break;
+		}
+		counter++;
+		//If the the counter is greater than 9, all the fields for a room object have been loaded. push_back room into the roomStorage vector and 
+		//start over with the next room in the data file.
+		if (counter > 9)
+		{
+            roomStorage.push_back(room); //This reads the Room object with all the values loaded from data file directly into the vector of Room objects
+            counter = 0; //This starts you over so you can put data into the next Room object
+		}
+	}
+}
+
+You can have separate data files for all the Item objects, Creature Objects, and the Inventory vector items (Room inventory and Player inventory) which can
+all be read into the appropriate objects with similar or slightly modified code. In the case of the room inventory, store the items in order of roomID separating 
+each room with a semicolon. For example: 1 13 23;5 7 ; 1 ; 6 9 15 18;  You can use code similar to that above but modified as there may be different numbers of items
+in each room. Using nesting loops, add them to a vector or array and add them to the appropriate room object with code something like this:
+
+roomStorage[counter].push_back(stoi(roomData));
