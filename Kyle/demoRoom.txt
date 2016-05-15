@@ -1,14 +1,22 @@
-This is the first demo room.
-Not much interesting here, this is just for testing.
-The items, direction, bool, and name listed below.
+101
 %
-1
-9
+999
 %
-2
--1
--1
--1
+This is a demo room. 
+There are three lines for the description in this room.
+This is the last line for the first room.
 %
-Room 1
-
+102
+%
+99
+%
+This is the second room in the big room file.
+It only has two lines!
+%
+103
+%
+777
+%
+Final room description here.
+Testing is done for now.
+%
