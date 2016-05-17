@@ -1,0 +1,22 @@
+101
+%
+999
+%
+This is a demo room. 
+There are three lines for the description in this room.
+This is the last line for the first room.
+%
+102
+%
+99
+%
+This is the second room in the big room file.
+It only has two lines!
+%
+103
+%
+777
+%
+Final room description here.
+Testing is done for now.
+%
