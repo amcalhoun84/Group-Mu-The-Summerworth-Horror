@@ -1,0 +1,1 @@
+kitchen;place where you cook stuff;1;5;0;0;3;1;0;0;library;place where you read stuff;2;4;1;0;2;1;0;0;;library;place where you read stuff;2;4;1;0;2;1;0;0;
