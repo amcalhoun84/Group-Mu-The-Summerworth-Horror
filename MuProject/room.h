@@ -5,6 +5,7 @@
 #include <vector>
 #include "item.h"
 
+
 using namespace std;
 
 class Room
@@ -18,9 +19,12 @@ private:
 	int south;
 	int east;
 	int west;
+	int up;
+	int down;
 	bool indoor; // is the room inside or outside?
 	bool dark;	// is the room dark when you enter?
-	bool roomVisited;
+	bool visited;
+	bool locked;
 
 	vector<int> roomItems;
 
@@ -50,20 +54,33 @@ public:
 	void setWest(int w) {west = w;}
 	int getWest() { return west; }
 
+	void setUp(int up) { this->up = up; }
+	int getUp() { return up; }
+
+	void setDown(int up) { this->up = up; }
+	int getDown() { return down; }
+
 	void setIndoor(bool in) { indoor = in; }
 	bool getIndoor() { return indoor; }
 
 	void setDark(bool dk) { dark = dk; }
 	bool getDark() { return dark; }
 
-	void addItem(int object) {roomItems.push_back(object);}
+	void setLocked(bool locked) { this->locked = locked; }
+	bool getLocked() { return locked; }
 
-	void removeItem(int item);
+	void setVisited(bool visited) {this->visited = visited;}
+	bool getVisited() { return visited; }
+
+	void addItem(int itemId) { roomItems.push_back(itemId); }
+	void addItem(vector<Room> &roomStorage, int itemId);
+
+	void removeItem(vector<Room> &roomStorage, int item);
 	void getItems(vector<Item> &itemStorage, vector<string> &roomItems);
 
 	void displayDesc();
 	void displayName();
-	void setVisited();
+	
 	void displayRoomItems(vector<Item> &itemStorage);
 	int move(string direction);
 

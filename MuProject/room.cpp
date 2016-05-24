@@ -16,13 +16,40 @@ Room::Room(string name, string roomDescription, int id, int north, int south, in
 	this->west = west;
 	this->indoor = indoor;
 	this->dark = dark;
-	this->roomVisited = false;
+	this->visited = false;
 }
 
 
-void Room::removeItem(int item)
+void Room::addItem(vector<Room> &roomStorage, int itemId)
+{
+	roomItems.push_back(itemId);
+	for (int i = 0; i < roomStorage.size(); i++)
+	{
+		if (this->roomID == roomStorage[i].roomID)
+		{
+			roomStorage[i].roomItems.push_back(itemId);
+		}
+	}
+}
+
+void Room::removeItem(vector<Room> &roomStorage, int item)
 {
 	roomItems.erase(find(roomItems.begin(), roomItems.end(), item));
+	for (int i = 0; i < roomStorage.size(); i++)
+	{
+		if (this->roomID == roomStorage[i].roomID)
+		{
+			for (int j = 0; j < roomStorage[i].roomItems.size(); j++)
+			{
+				if (item == roomStorage[i].roomItems[j])
+				{
+					swap(roomStorage[i].roomItems[j], roomStorage[i].roomItems.back());
+					roomStorage[i].roomItems.pop_back();
+				}
+			}
+			
+		}
+	}
 }
 
 void Room::getItems(vector<Item>& itemStorage, vector<string>& items)
@@ -43,10 +70,6 @@ void Room::displayName()
 	cout << roomName << endl;
 }
 
-void Room::setVisited()
-{
-	roomVisited = true;
-}
 
 void Room::displayRoomItems(vector<Item>& itemStorage)
 {

@@ -77,6 +77,18 @@ int parseCommand(string command)
 	{
 		filter = 4;
 	}
+	else if (com == "EQUIP")
+	{
+		filter = 5;
+	}
+	else if (com == "EAT")
+	{
+		filter = 6;
+	}
+	else if (com == "USE")
+	{
+		filter = 7;
+	}
 	else if (com == "QUIT")
 	{
 		filter = 9999;
@@ -90,7 +102,7 @@ int parseCommand(string command)
 	return filter;
 }
 
-bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room, Player &player, int filter,string command)
+bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &room, Player &player, int filter,string command)
 {
 	int id;
 	vector<string> commands;
@@ -109,7 +121,7 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 	}
 
 	com1 = commands[0];
-	//Basically, if input is not "QUIT", it should be a 2 word command
+	//Basically, if input is not "QUIT", it should be a 2 word command and safe to assign com2 to the second element of commands
 	if (filter != 9999)
 	{
 		com2 = commands[1];
@@ -132,7 +144,7 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 			}
 			else
 			{
-				displayRoom(roomStorage, room, id);
+				displayRoom(roomStorage, itemStorage, player, room, id);
 				gameOver = false;
 				break;
 			}
@@ -148,7 +160,7 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 			}
 			else
 			{
-				displayRoom(roomStorage, room, id);
+				displayRoom(roomStorage, itemStorage, player, room, id);
 				gameOver = false;
 				break;
 			}
@@ -164,7 +176,7 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 			}
 			else
 			{
-				displayRoom(roomStorage, room, id);
+				displayRoom(roomStorage, itemStorage, player, room, id);
 				gameOver = false;
 				break;
 			}
@@ -180,7 +192,7 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 			}
 			else
 			{
-				displayRoom(roomStorage, room, id);
+				displayRoom(roomStorage, itemStorage, player, room, id);
 				gameOver = false;
 				break;
 			}
@@ -215,7 +227,7 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 			{
 				id = getItemId(itemStorage, com2);
 				player.addInventory(itemStorage, id);
-				room.removeItem(id);
+				room.removeItem(roomStorage, id);
 				gameOver = false;
 				break;
 			}
@@ -237,9 +249,35 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 		}
 		else
 		{
-			cout << "I don't know what you want to " << com1 << " at. Please try again." << endl;
-			gameOver = false;
-			break;
+			vector<string>items;
+			room.getItems(itemStorage, items);
+			for (int i = 0; i < items.size(); i++)
+			{
+				if (com2 == toUpperStr(items[i]))
+				{
+					itemPresent = true;
+				}
+			}
+			if (itemPresent)
+			{
+				for (int i = 0; i < itemStorage.size(); i++)
+				{
+					if (com2 == toUpperStr(itemStorage[i].getName()))
+					{
+						itemStorage[i].displayDescription();
+						gameOver = false;
+						
+					}
+				}
+				break;
+			}
+			else
+			{
+				cout << "I don't know what you want to " << com1 << " at. Please try again." << endl;
+				gameOver = false;
+				break;
+			}
+			
 		}
 	case 4:
 		
@@ -257,8 +295,8 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 		{
 			id = getItemId(itemStorage, com2);
 			player.removeInventory(id);
-			room.addItem(id);
-			cout << "You dropped" << getItemName(itemStorage, id) << " from your inventory." << endl;
+			room.addItem(roomStorage,id);
+			cout << "You dropped " << getItemName(itemStorage, id) << " from your inventory." << endl;
 			gameOver = false;
 			break;
 		}
@@ -267,6 +305,180 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 			cout << "I don't know what you what to " << com1 << endl;
 			gameOver = false;
 			break;
+		}
+	case 5:
+		player.getItems(itemStorage, items);
+
+		for (int i = 0; i < items.size(); i++)
+		{
+			if (com2 == toUpperStr(items[i]))
+			{
+				itemPresent = true;
+			}
+		}
+		if (itemPresent)
+		{
+			id = getItemId(itemStorage, com2);
+			player.setEquippedItem(id);
+			cout << "You equipped " << getItemName(itemStorage, id) << " ." << endl;
+			gameOver = false;
+			break;
+		}
+		else
+		{
+			cout << "I don't know what you what to " << com1 << endl;
+			gameOver = false;
+			break;
+		}
+	case 6:
+		if (com2 == "TOMATO" || com2 == "SANDWICH" || com2 == "BANANA" || com2 == "ENERGY" || com2 == "BAR")
+		{
+			player.getItems(itemStorage, items);
+			for (int i = 0; i < items.size(); i++)
+			{
+				if (com2 == toUpperStr(items[i]))
+				{
+					itemPresent = true;
+				}
+			}
+			if (itemPresent)
+			{
+				srand(time(NULL));
+				int randomTaunt = rand() % 6 + 1;
+
+				switch (randomTaunt)
+				{
+				case 1:
+					cout << "That really hit the spot!" << endl;
+					break;
+
+				case 2:
+					cout << "Could have used some ketchup!" << endl;
+					break;
+
+				case 3:
+					cout << "That was delicious. Do you have any beer?" << endl;
+					break;
+
+				case 4:
+					cout << "Wow, that was surprisingly good!" << endl;
+					break;
+
+				case 5:
+					cout << "Just like Momma used to make!" << endl;
+					break;
+
+				case 6:
+					cout << "Please sir, may I have another?" << endl;
+					break;
+
+				default:
+					cout << "My writer got bored and forgot to include a taunt here... " << endl;
+					break;
+				}
+			
+				id = getItemId(itemStorage, com2);
+				player.removeInventory(id);
+				gameOver = false;
+				break;
+			}
+			else
+			{
+				srand(time(NULL));
+				int randomTaunt = rand() % 6 + 1;
+
+				switch (randomTaunt)
+				{
+				case 1:
+					cout << "That sounds good! Do you have one?" << endl;
+					break;
+
+				case 2:
+					cout << "You certainly have a vivid imagination. Please enjoy your non-existent meal!" << endl;
+					break;
+
+				case 3:
+					cout << "There's no " << com2 << " here. How many fingers am I holding up? " << endl; ;
+					break;
+
+				case 4:
+					cout << "There's no " << com2 << " here. Did you hit your head on something? " << endl;
+					break;
+
+				case 5:
+					cout << "I think you should get your eyes checked! " << "There's no " << com2 << " here." << endl;
+					break;
+
+				case 6:
+					cout << "You're kidding, right?" << endl;
+					break;
+
+				default:
+					cout << "My writer got bored and forgot to include a taunt here... " << endl;
+					break;
+				}
+
+
+				gameOver = false;
+				break;
+			}
+			
+		}
+		else
+		{			
+			srand(time(NULL));
+			int randomTaunt = rand() % 6 + 1;
+
+			switch (randomTaunt)
+			{
+			case 1:
+				cout << "I wouldn't eat that if I were you!" << endl;
+				break;
+
+			case 2:
+				cout << "I don't think that's on your diet!" << endl;
+				break;
+
+			case 3:
+				cout << "You're kidding, right?" << endl; ;
+				break;
+
+			case 4:
+				cout << "I don't think that would taste very good!" << endl;
+				break;
+
+			case 5:
+				cout << "Ha ha. Very funny!" << endl;
+				break;
+
+			case 6:
+				cout << "I would never thought of trying to eat that!" << endl;
+				break;
+
+			default:
+				cout << "My writer got bored and forgot to include a taunt here... " << endl;
+				break;
+			}
+			gameOver = false;
+			break;
+		}
+	case 7:
+		if (com2 == "FLASHLIGHT")
+		{
+			if (getItemName(itemStorage, player.getEquippedItem()) == "flashlight")
+			{
+				cout << "Now you can see a little better." << endl;
+				player.setHasLight(true);
+				room.displayName();
+				room.displayDesc();
+				room.displayRoomItems(itemStorage);
+				gameOver = false;
+				break;
+			}
+		}
+		else if (com2 == "KEY")
+		{
+
 		}
 	case 9999:
 		gameOver = quit();
@@ -278,7 +490,7 @@ bool callFunction(vector<Room> roomStorage,vector<Item> itemStorage, Room &room,
 	return gameOver;
 }
 
-void displayRoom(vector<Room> roomStorage, Room &room, int id)
+void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage,Player &player, Room &room, int id)
 {
 	for (int i = 0; i < roomStorage.size(); i++)
 	{
@@ -288,7 +500,16 @@ void displayRoom(vector<Room> roomStorage, Room &room, int id)
 		}
 	}
 	room.displayName();
-	room.displayDesc();
+	if (!room.getDark() || player.getHasLight())
+	{
+		room.displayDesc();
+		room.displayRoomItems(itemStorage);
+	}
+	else
+	{
+		cout << "It's dark and you can't see anything!" << endl;
+	}
+	
 }
 
 bool quit() 

@@ -23,6 +23,7 @@ private:
 	bool canCarry;
 	bool indestructible; // Can't destroy the item -- only false for certain plot items.
 	bool usable;
+	
 
 public:
 

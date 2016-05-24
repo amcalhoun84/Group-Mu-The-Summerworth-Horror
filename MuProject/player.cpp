@@ -9,11 +9,11 @@ using namespace std;
 
 Player::Player()
 {
-	playerHealth = 40;
-	playerSanity = 10;
+	playerHealth = 100;
+	playerSanity = 25;
 	playerInventory.push_back(1);
 	playerInventory.push_back(2);
-	playerInventory.push_back(3);
+	playerInventory.push_back(3);	
 }
 
 Player::Player(int health, int sanity)
@@ -29,7 +29,12 @@ void Player::setHealth(int health)
 
 void Player::setSanity(int sanity)
 {
-	playerSanity = sanity;
+	this->playerSanity = sanity;
+}
+
+void Player::setEquippedItem(int equippedItem)
+{
+	this->equippedItem = equippedItem;
 }
 
 int Player::getHealth()
@@ -40,6 +45,11 @@ int Player::getHealth()
 int Player::getSanity()
 {
 	return playerSanity;
+}
+
+int Player::getEquippedItem()
+{
+	return equippedItem;
 }
 
 void Player::displayInventory(vector<Item> &itemStorage)

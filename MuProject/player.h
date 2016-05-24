@@ -14,6 +14,7 @@ private:
 
 	int playerHealth;
 	int playerSanity;
+	int equippedItem;
 
 	vector<int> playerInventory;
 	string characterName;
@@ -27,8 +28,13 @@ public:
 	Player(int health, int sanity);
 	void setHealth(int health);
 	void setSanity(int sanity);
+	void setEquippedItem(int equippedItem);
+	void setHasLight(bool hasLight) { this->hasLight = hasLight; }
+
 	int getHealth();
 	int getSanity();
+	int getEquippedItem();
+	bool getHasLight() { return this->hasLight; }
 	void displayInventory(vector<Item> &itemStorage);
 	void addInventory(vector<Item> &itemStorage, int itemID);
 	void getItems(vector<Item> &itemStorage, vector<string>&items);
