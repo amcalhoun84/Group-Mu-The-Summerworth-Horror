@@ -42,7 +42,7 @@ public:
 	void setName(string name) { critterName = name; }
 	void setCritterDescription(string description) { critterDesc = description; }
 	void setCritterShortDesc(string description) { critterShortDesc = description; }
-	void setCritterKeywords(string keyword) { keywords.push_back(keyword); }
+	//void setCritterKeywords(string keyword) { keywords.push_back(keyword); }
 	
 	void setHealth(int _health) { this->health = _health; }
 	void setDV(int _dv) { this->damageValue = _dv; }

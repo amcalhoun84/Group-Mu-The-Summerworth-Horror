@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 #include "room.h"
+#include "critter.h"
+#include "item.h"
 
 using namespace std;
 
@@ -132,16 +134,18 @@ void loadRoom(Room &room, vector<Room> &roomStorage)
 	}
 }
 
-//add critter data from file
+/*********************************************
+**loadCritter
+*********************************************/
 
 void loadCritter(Critter &critter, vector<Critter> &critterStorage)
 {
 	string critterData;
 	
-	ifstream roomFile;
-	roomFile.open("critterData.txt"); //Placeholder until path of critter file is known.
+	ifstream critterFile;
+	critterFile.open("critterData.txt"); //Placeholder until path of critter file is known.
 	
-	if (!roomFile)
+	if (!critterFile)
 	{
 		cout << "Error opening data file" << endl;
 	}
@@ -149,27 +153,30 @@ void loadCritter(Critter &critter, vector<Critter> &critterStorage)
 	int counter = 0;
 	stringstream ss;
 	int num;
+	string temp;
 	bool marker = false;
 	
-	while (getline(roomFile, critterData, ';'))
+	while (getline(critterFile, critterData, ';'))
 	{
 		switch (counter)
 		{
 		case 0:
 			critter.setName(critterData);
 			break;
-		
 		case 1:
 			critter.setCritterDescription(critterData);
 			break;
-			
 		case 2:
 			critter.setCritterShortDesc(critterData);
 			break;
 					
 		//Unsure of keywords vector implementation
 		case 3:
-			critter.setCritterKeywords(critterData);
+			ss.str(critterData);
+			while (ss >> temp)
+			{
+				critter.keywords.push_back(temp);
+			}
 			break;
 		case 4:
 			ss.str(critterData);
@@ -232,15 +239,101 @@ void loadCritter(Critter &critter, vector<Critter> &critterStorage)
 			break;
 		}
 		counter++;
-		//If the the counter is greater than 9, all the fields for a room object have been loaded. push_back room into the roomStorage vector and 
-		//start over with the next room in the data file.
+		
 		if (counter > 10)
 		{
 			critterStorage.push_back(critter); 
 			counter = 0;
 		}
 	}
+}
+
+/*********************************************
+**loadItem
+*********************************************/
+
+void loadItem(Item &item, vector<Item> &itemStorage)
+{
+	string itemData;
 	
+	ifstream itemFile;
+	itemFile.open("itemData.txt"); //Placeholder until path of item file is known.
 	
+	int counter = 0;
+	stringstream ss;
+	int num;
+	bool marker = false;
+	
+	while (getline(itemFile, itemData, ';'))
+	{
+		switch (counter)
+		{
+			//starting with item id
+		case 0:
+			ss.str(itemData);
+			ss >> num;
+			item.setItemId(num);
+			break;
+		case 1:
+			item.setName(itemData);
+			break;
+		case 2:
+			item.setDesc(itemData);
+			break;		
+		case 3:
+			item.setShort(itemData);
+			break;
+		case 4:
+			ss.str(itemData);
+			ss >> num;
+			item.setScoreValue(num);
+			break;
+		case 5:
+			ss.str(itemData);
+			ss >> num;
+			item.setHealth(num);
+			break;
+		case 6:
+			if (itemData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			item.setCanCarry(marker);
+			break;
+		case 7:
+			if (itemData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			item.setIndestructible(marker);
+			break;
+		case 8:
+			if (itemData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			item.setUsable(marker);
+			break;
+		}
+		counter++;
+		
+		if (counter > 8)
+		{
+			itemStorage.push_back(item); 
+			counter = 0;
+		}
+	}
 }
 

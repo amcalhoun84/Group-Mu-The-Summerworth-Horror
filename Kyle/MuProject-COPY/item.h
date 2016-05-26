@@ -32,6 +32,7 @@ public:
 	Item(string name, string description, string shortDesc, int itemId, int scoreValue, int health, bool canCarry, bool indestructible, bool usable);
 
 	// Setters
+	void setItemId(int id) { itemID = id; }
 	void setName(string name) { this->name = name; }
 	void setDesc(string desc) { this->description = desc; }
 	void setShort(string sdesc) { this->shortDesc = sdesc; }
