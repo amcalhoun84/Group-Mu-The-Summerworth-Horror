@@ -24,8 +24,11 @@ private:
 	bool indestructible; // Can't destroy the item -- only false for certain plot items.
 	bool usable;
 	
+	
 
 public:
+
+	vector<string> keywords;
 
 	Item() {}; // generic constructor
 
@@ -55,7 +58,9 @@ public:
 	bool getCanCarry() { return canCarry; }
 	bool getIndestructible() { return indestructible; }
 	bool getUsable() { return usable; }
-	
+
+	void addKeyword(string keyword) { this->keywords.push_back(keyword); }
+
 	void displayDescription();
 	void displayName();
 	void displayShortDesc();

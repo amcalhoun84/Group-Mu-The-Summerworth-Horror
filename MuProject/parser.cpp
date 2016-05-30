@@ -132,7 +132,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 	case -1: 
 		gameOver = false;
 		break;
-	case 1:
+	case 1: //go or move
 		if (com2 == "NORTH")
 		{
 			id = room.getNorth();
@@ -203,7 +203,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			gameOver = false;
 			break;
 		}
-	case 2:
+	case 2: //get
 		if (com2 == "INVENTORY")
 		{
 			player.displayInventory(itemStorage);
@@ -213,7 +213,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 		else
 		{
 			vector<string> items;
-			room.getItems(itemStorage, items);
+			room.getKeywords(itemStorage, items);
 
 			for (int i = 0; i < items.size(); i++)
 			{
@@ -225,7 +225,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 
 			if (itemPresent)
 			{
-				id = getItemId(itemStorage, com2);
+				id = getItemId(itemStorage, room, com2);
 				player.addInventory(itemStorage, id);
 				room.removeItem(roomStorage, id);
 				gameOver = false;
@@ -239,7 +239,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			}	
 			
 		}
-	case 3:
+	case 3: //look
 		if (com2 == "ROOM")
 		{
 			room.displayDesc();
@@ -279,9 +279,10 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			}
 			
 		}
-	case 4:
+	case 4: //drop
 		
 		player.getItems(itemStorage, items);
+		player.getKeywords(itemStorage, items);
 
 		for (int i = 0; i < items.size(); i++)
 		{
@@ -293,7 +294,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 
 		if (itemPresent)
 		{
-			id = getItemId(itemStorage, com2);
+			id = getItemId(itemStorage, room, com2);
 			player.removeInventory(id);
 			room.addItem(roomStorage,id);
 			cout << "You dropped " << getItemName(itemStorage, id) << " from your inventory." << endl;
@@ -306,8 +307,11 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			gameOver = false;
 			break;
 		}
-	case 5:
+	case 5:  //equip
+		
 		player.getItems(itemStorage, items);
+
+		player.getKeywords(itemStorage, items);
 
 		for (int i = 0; i < items.size(); i++)
 		{
@@ -318,7 +322,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 		}
 		if (itemPresent)
 		{
-			id = getItemId(itemStorage, com2);
+			id = getItemId(itemStorage, room, com2);
 			player.setEquippedItem(id);
 			cout << "You equipped " << getItemName(itemStorage, id) << " ." << endl;
 			gameOver = false;
@@ -330,10 +334,12 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			gameOver = false;
 			break;
 		}
-	case 6:
+	case 6: //eat 
 		if (com2 == "TOMATO" || com2 == "SANDWICH" || com2 == "BANANA" || com2 == "ENERGY" || com2 == "BAR")
 		{
-			player.getItems(itemStorage, items);
+			vector<string> items;
+			player.getKeywords(itemStorage, items);
+
 			for (int i = 0; i < items.size(); i++)
 			{
 				if (com2 == toUpperStr(items[i]))
@@ -377,7 +383,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 					break;
 				}
 			
-				id = getItemId(itemStorage, com2);
+				id = getItemId(itemStorage, room, com2);
 				player.removeInventory(id);
 				gameOver = false;
 				break;
@@ -417,7 +423,6 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 					cout << "My writer got bored and forgot to include a taunt here... " << endl;
 					break;
 				}
-
 
 				gameOver = false;
 				break;
@@ -462,25 +467,71 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			gameOver = false;
 			break;
 		}
-	case 7:
+	case 7: //use
 		if (com2 == "FLASHLIGHT")
-		{
-			if (getItemName(itemStorage, player.getEquippedItem()) == "flashlight")
+		{	
+			vector<string> items;
+			player.getKeywords(itemStorage, items);
+
+			for (int i = 0; i < items.size(); i++)
 			{
-				cout << "Now you can see a little better." << endl;
-				player.setHasLight(true);
-				room.displayName();
+				if (com2 == toUpperStr(items[i]))
+				{
+					itemPresent = true;
+				}
+			}
+
+			if (itemPresent)
+			{
+				cout << "You can see a lot better now!" << endl;
 				room.displayDesc();
 				room.displayRoomItems(itemStorage);
+				player.setHasLight(true);
+
+				gameOver = false;
+				break;
+			}
+			else
+			{
+				cout << "I don't know what you what to " << com1 << endl;
 				gameOver = false;
 				break;
 			}
 		}
 		else if (com2 == "KEY")
 		{
+			vector<string> items;
+			player.getKeywords(itemStorage, items);
 
+			for (int i = 0; i < items.size(); i++)
+			{
+				if (com2 == toUpperStr(items[i]))
+				{
+					itemPresent = true;
+				}
+			}
+
+			if (itemPresent)
+			{
+				cout << "The door is unlocked!" << endl;
+				room.setLocked(false);
+				gameOver = false;
+				break;
+			}
+			else
+			{
+				cout << "I don't know what you what to " << com1 << endl;
+				gameOver = false;
+				break;
+			}
 		}
-	case 9999:
+		else
+		{
+			cout << "I don't know what you want to " << com1 << endl;
+			gameOver = false;
+			break;
+		}
+	case 9999: //quit
 		gameOver = quit();
 		break;
 	default:
@@ -590,14 +641,61 @@ string getItemName(vector<Item> &itemStorage, int itemId)
 	return itemName;
 }
 
-int getItemId(vector<Item> &itemStorage, string item)
+int getItemId(vector<Item> &itemStorage, Room &room, string item)
 {
-	int id;
+	int id = 0;
+	vector<int> items;
+	
+	bool endLoop = false;
+	room.getItemsVector(items);
+	
+
 	for (int i = 0; i < itemStorage.size(); i++)
 	{
-		if (item == toUpperStr(itemStorage[i].getName()))
+		for (int j = 0; j < itemStorage[i].keywords.size(); j++)
 		{
-			id = itemStorage[i].getItemID();
+			
+				if (toUpperStr(itemStorage[i].keywords[j]) == item)
+				{
+					id = itemStorage[i].getItemID();
+					for (int k = 0; k < items.size(); k++)
+					{
+						if (id == items[k])
+						{
+							return id;
+						}
+					}
+				}
+		}
+	}
+	return id;
+}
+
+int getPlayerItemId(vector<Item> &itemStorage, Player &player, string item)
+{
+	int id = 0;
+	vector<int> items;
+
+	bool endLoop = false;
+	player.getItemsVector(items);
+
+
+	for (int i = 0; i < itemStorage.size(); i++)
+	{
+		for (int j = 0; j < itemStorage[i].keywords.size(); j++)
+		{
+
+			if (toUpperStr(itemStorage[i].keywords[j]) == item)
+			{
+				id = itemStorage[i].getItemID();
+				for (int k = 0; k < items.size(); k++)
+				{
+					if (id == items[k])
+					{
+						return id;
+					}
+				}
+			}
 		}
 	}
 	return id;

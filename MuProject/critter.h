@@ -34,7 +34,7 @@ private:
 
 public:
 	Critter();
-	Critter(string critterName, string critterDesc, string critterShortDesc, vector<string> keywords, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused);
+	Critter(string critterName, string critterDesc, string critterShortDesc, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused);
 	~Critter();
 
 	// setters
@@ -46,13 +46,14 @@ public:
 	void setInvincible(bool _invincible) { this->invincible = _invincible; }
 	void setEvidence(bool _evidence) { this->evidence = _evidence; }
 	void setAccused(bool _accused) { this->accused = _accused; }
+	void setKeywords(vector<string>keywords) { this->keywords = keywords;}
 
 	// getters
 	int getHealth() { return this->health; }
 	int getDV() { return this->damageValue; }
 	int getSA() { return this->sanityAttack; }
 
-
+	void addKeywords(string keyword) { this->keywords.push_back(keyword);}
 
 	// Combat Engine -- we don't need a separate class for this. These will be used in tandem
 	// with getters and setters. We just need to know the extend of damage done.

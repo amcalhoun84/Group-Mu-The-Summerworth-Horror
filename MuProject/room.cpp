@@ -34,7 +34,17 @@ void Room::addItem(vector<Room> &roomStorage, int itemId)
 
 void Room::removeItem(vector<Room> &roomStorage, int item)
 {
-	roomItems.erase(find(roomItems.begin(), roomItems.end(), item));
+	//This loop removes item from the roomItems vector in the current room object
+	for (int i = 0; i < this->roomItems.size(); i++)
+	{
+		if (item == this->roomItems[i])
+		{
+			swap(this->roomItems[i], this->roomItems.back());
+			this->roomItems.pop_back();
+			break;
+		}
+	}
+	//This removes the item from the roomItems of the corresponding room object in the roomStorage vector
 	for (int i = 0; i < roomStorage.size(); i++)
 	{
 		if (this->roomID == roomStorage[i].roomID)
@@ -59,6 +69,25 @@ void Room::getItems(vector<Item>& itemStorage, vector<string>& items)
 		items.push_back(getItemName(itemStorage, roomItems[i]));
 	}
 }
+
+void Room::getKeywords(vector<Item>& itemStorage, vector<string>& words)
+{
+	for (int i = 0; i < this->roomItems.size(); i++)
+	{
+		for (int j = 0; j < itemStorage.size(); j++)
+		{
+			if (roomItems[i] == itemStorage[j].getItemID())
+			{
+				for (int k = 0; k < itemStorage[j].keywords.size(); k++)
+				{
+					words.push_back(itemStorage[j].keywords[k]);
+				}
+			}
+		}
+	}
+}
+
+
 
 void Room::displayDesc()
 {

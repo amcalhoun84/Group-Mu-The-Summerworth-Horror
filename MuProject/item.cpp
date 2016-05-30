@@ -17,6 +17,8 @@ Item::Item(string name, string description, string shortDesc, int itemId, int sc
 	this->usable = usable;
 }
 
+
+
 void Item::displayDescription()
 {
 	cout << description << endl;

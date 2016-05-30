@@ -40,7 +40,8 @@ public:
 	void getItems(vector<Item> &itemStorage, vector<string>&items);
 	
 	void removeInventory(int itemID);
-
+	void getKeywords(vector<Item>& itemStorage, vector<string>& words);
+	void getItemsVector(vector<int>&items) { items = this->playerInventory; }
 };
 
 #endif // !PLAYER_H

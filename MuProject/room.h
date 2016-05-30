@@ -14,7 +14,8 @@ private:
 	string roomName;
 	string roomDescription;
 	
-	int roomID; 
+	int roomID;
+	int critter;
 	int north;
 	int south;
 	int east;
@@ -25,12 +26,14 @@ private:
 	bool dark;	// is the room dark when you enter?
 	bool visited;
 	bool locked;
-
 	vector<int> roomItems;
+	
 
 public:
+
+	
 	Room(){};
-	Room::Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark);
+	Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark);
 	~Room(){};
 
 	void setName(string name) { roomName = name; }
@@ -41,6 +44,9 @@ public:
 
 	void setRoomId(int room) { roomID = room;}
 	int getRoomId() { return roomID; }
+
+	void setCritter(int critter) { this->critter = critter; }
+	int getCritter() { return critter; }
 
 	void setNorth(int n) {north = n;}
 	int getNorth() { return north;}
@@ -63,7 +69,7 @@ public:
 	void setIndoor(bool in) { indoor = in; }
 	bool getIndoor() { return indoor; }
 
-	void setDark(bool dk) { dark = dk; }
+	void setDark(bool dk) { this->dark = dk; }
 	bool getDark() { return dark; }
 
 	void setLocked(bool locked) { this->locked = locked; }
@@ -77,9 +83,11 @@ public:
 
 	void removeItem(vector<Room> &roomStorage, int item);
 	void getItems(vector<Item> &itemStorage, vector<string> &roomItems);
+	void getKeywords(vector<Item> &itemStorage, vector<string> &words);
 
 	void displayDesc();
 	void displayName();
+	void getItemsVector(vector<int>&items) { items = this->roomItems; }
 	
 	void displayRoomItems(vector<Item> &itemStorage);
 	int move(string direction);

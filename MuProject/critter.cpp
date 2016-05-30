@@ -17,7 +17,7 @@ Critter::Critter()
 
 }
 
-Critter::Critter(string critterName, string critterDesc, string critterShortDesc, vector<string> keywords, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused)
+Critter::Critter(string critterName, string critterDesc, string critterShortDesc, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused)
 {
 
 	this->critterName = critterName;
