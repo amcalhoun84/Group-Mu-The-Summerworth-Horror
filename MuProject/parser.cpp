@@ -204,7 +204,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			id = room.getUp();
 			if (id == -1)
 			{
-				cout << "You can't " << com1 << " up. Try another command" << endl;
+				cout << "You can't " << com1 << " uplayer. Try another command" << endl;
 				gameOver = false;
 				break;
 			}
@@ -420,7 +420,37 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 				}
 			
 				id = getItemId(itemStorage, room, com2);
+				
+				int playerHealth = player.getHealth();
+				int playerSanity = player.getSanity();
+
+				if (com2 == "TOMATO")
+				{
+					playerHealth += 15;
+					playerSanity += 5;
+				}
+
+				if (com2 == "BANANA") 
+				{
+					playerHealth += 10;
+					playerSanity += 10;
+				}
+
+				if (com2 == "ENERGY") 
+				{
+					playerHealth += 10;
+					playerSanity += 15;
+				}
+
+				if (com2 == "BAR")
+				{
+					playerHealth += 10;
+					playerSanity += 15;
+				}
+
 				player.removeInventory(id);
+				player.setHealth(playerHealth);
+				player.setSanity(playerSanity);
 				gameOver = false;
 				break;
 			}
@@ -561,6 +591,54 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 				break;
 			}
 		}
+
+		else if (com2 == "ROSE" || "BLUE" || "BLUE ROSE" || "BLUEROSE" )
+		{
+			vector<string> items;
+			player.getKeywords(itemStorage, items);
+			for(int i = 0; i < items.size(); i++)
+			{
+				if(com2 == toUpperStr(items[i]))
+				{
+					itemPresent == true;
+				}
+
+				if(room.getID() == 33)
+				{
+					if(room.CritterID() == 105)
+					{
+						OWS.setHealth(this->critterHealth-1);
+
+						int attackResults;
+						playerHealth = player.getHealth();
+						playerSanity = player.getSanity();
+						attackResults = c.attackPlayer();
+						playerHealth -= attackResults;
+						player.setHealth(playerHealth);
+						attackResults = c.attackSanity();
+						playerSanity -= attackResults;
+						player.setSanity(playerSanity);
+
+
+						if(playerHealth <= 0)
+						{
+							g.deathScreen();
+							gameOver = true;
+						}
+						if(playerSanity <= 0)
+						{
+							d.insanityScreen()
+							gameOver = true;
+						}
+						player.removeInventory(203);
+					}
+				}
+				else
+				{
+					cout << "You admire a beautiful blue rose." << endl;
+				}
+			}
+		}
 		else
 		{
 			cout << "I don't know what you want to " << com1 << endl;
@@ -568,22 +646,51 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			break;
 		}
 		case 8: // attack 	
-			for(int i=0; i < roomStorage.size()-1; i++)
+
+			// Rick, Kyle, I set up the harness for items, but I think we honestly should just skip items being destructible as it serves
+			// no greater purpose in the game. We can add this in if we want and have funny taunts, but meh.
+			//for(int i=0; i < roomStorage.size()-1; i++)
+			//{
+			//	itemName = roomStorage.at(i).getName();
+			//	if(com2 == itemName || itemKeyword)
+			//	{
+			//
+			//	}
+			//}
+
+			int critter = Room.getCritterID();
+
+			// ((rooms without critters might want to have the 0 id))
+
+			if(critter == 0)
 			{
-				itemName = roomStorage.at(i).getName();
-				if(com2 == itemName)
+				int randomTaunt = (rand() % 6) + 1;
+
+				switch(randomTaunt)	// all these random taunts except for the last two are based off 
 				{
-
+					case 1:
+						cout << "You cast magic missile at the darkness..." << endl;
+						break;
+					case 2:
+						cout << "OH, look! A Gazebo!" << endl;
+						break; 
+					case 3:	
+						cout << "If there are hot chicks at the tavern, I want to do them!!!!" << endl;
+						break; 
+					case 4:
+						cout << "Do you have any Mountain Dew or Doritos?" << endl;
+						break;
+					case 5:
+						cout << "There's nothing there. And nothing is scarier." << endl;
+						break;
+					case 6:
+						cout << "Swing and a miss!" << endl;
+						break;
+					default:
+						cout << "The author went to go get a Coke and some cigarettes and never came back. I'm lonely..." << endl;
+						break;
 				}
-			}
 
-
-			if(!critter)
-			{
-				cout << "You cast magic missile at the darkness..." << endl;
-				cout << "OH, look! A Gazebo!" << endl;
-				cout << "If there are hot chicks at the tavern, I want to do them!!!!" << endl;
-				cout << "Do you have any Mountain Dew or Doritos?" << endl;
 			}
 
 			if(critter.getEssential() == true)
@@ -625,7 +732,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 				break;
 			}
 
-			if(critter.getInvcinble() == true)
+			if(critter.getInvincible() == true)
 			{
 				int randomTaunt = (rand() % 6) + 1;
 
@@ -664,15 +771,15 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 				break;
 			}
 
-			p.setInCombat(true);
-			while(p.getInCombat() == true)
+			player.setInCombat(true);
+			while(player.getInCombat() == true)
 			{
 				int attackResults;
 				int coinFlip = rand() % 2;
 
 				critterHealth = c.getHealth();
-				playerHealth = p.getHealth();
-				playerSanity = p.getSanity();
+				playerHealth = player.getHealth();
+				playerSanity = player.getSanity();
 
 				if(critterHealth <= 0)
 				{
@@ -699,17 +806,17 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 
 				if(coinFlip == 0) // player goes first
 				{
-					attackResults = p.attackCritter();
+					attackResults = player.attackCritter();
 					attackResults = c.attackPlayer();
 
 
 				}
 				else // enemy goes first this round
 				{
-					attackResults = p.attackPlayer();
+					attackResults = player.attackPlayer();
 					
 					playerHealth -= attackResults;
-					p.setHealth(playerHealth);
+					player.setHealth(playerHealth);
 					
 					attackResults = c.attackCritter();
 
@@ -718,7 +825,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 					{
 						attackResults = c.attackSanity();
 						playerSanity -= attackResults;
-						p.setSanity(playerSanity);
+						player.setSanity(playerSanity);
 					}
 				
 				}
