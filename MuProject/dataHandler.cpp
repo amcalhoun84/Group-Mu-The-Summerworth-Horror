@@ -120,11 +120,15 @@ void loadRoom(Room &room, vector<Room> &roomStorage)
 			}
 			room.setVisited(marker);
 			break;
+		case 13:
+			ss.str(roomData);
+			ss >> num;
+			room.setCritter(num);
 		}
 		counter++;
 		//If the the counter is greater than 9, all the fields for a room object have been loaded. push_back room into the roomStorage vector and 
 		//start over with the next room in the data file.
-		if (counter > 12)
+		if (counter > 13)
 		{
 			roomStorage.push_back(room); //This reads the Room object with all the values loaded from data file directly into the vector of Room objects
 			counter = 0; //This starts you over so you can put data into the next Room object
