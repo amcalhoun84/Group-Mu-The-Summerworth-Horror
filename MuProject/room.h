@@ -6,6 +6,7 @@
 #include "item.h"
 
 
+
 using namespace std;
 
 class Room
@@ -45,8 +46,8 @@ public:
 	void setRoomId(int room) { roomID = room;}
 	int getRoomId() { return roomID; }
 
-	void setCritter(int critter) { this->critter = critter; }
-	int getCritter() { return critter; }
+	void setCritter(int critter) { critterID = critter; }
+	int getCritter() { return critterID; }
 
 	void setNorth(int n) {north = n;}
 	int getNorth() { return north;}
