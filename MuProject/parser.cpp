@@ -1,6 +1,6 @@
-#include<string>
+#include <string>
 #include <iostream>
-#include<sstream>
+#include <sstream>
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
@@ -11,8 +11,6 @@
 #include "item.h"
 
 using namespace std;
-
-
 
 string getPlayerInput()
 {
@@ -65,11 +63,11 @@ int parseCommand(string command)
 	{
 		filter = 1; 
 	}
-	else if (com == "GET")
+	else if (com == "GET" || com == "TAKE" || com == "GRAB")
 	{
 		filter = 2;
 	}
-	else if (com == "LOOK")
+	else if (com == "LOOK" || com == "EXAMINE" || com == "INSPECT")
 	{
 		filter = 3;
 	}
@@ -77,7 +75,7 @@ int parseCommand(string command)
 	{
 		filter = 4;
 	}
-	else if (com == "EQUIP")
+	else if (com == "EQUIP" || com == "WIELD")
 	{
 		filter = 5;
 	}
@@ -88,6 +86,10 @@ int parseCommand(string command)
 	else if (com == "USE")
 	{
 		filter = 7;
+	}
+	else if (com == "ATTACK" || com == "FIGHT" || com == "KILL")
+	{
+		filter = 8;
 	}
 	else if (com == "QUIT")
 	{
@@ -197,6 +199,40 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 				break;
 			}
 		}
+		else if (com2 == "UP")
+		{
+			id = room.getUp();
+			if (id == -1)
+			{
+				cout << "You can't " << com1 << " up. Try another command" << endl;
+				gameOver = false;
+				break;
+			}
+			else
+			{
+				displayRoom(roomStorage, itemStorage, player, room, id);
+				gameOver = false;
+				break;
+			}
+		}
+		else if (com2 == "DOWN")
+		{
+			id = room.getDown();
+			if (id == -1)
+			{
+				cout << "You can't " << com1 << " down. Try another command" << endl;
+				gameOver = false;
+				break;
+			}
+			else
+			{
+				displayRoom(roomStorage, itemStorage, player, room, id);
+				gameOver = false;
+				break;
+			}
+		}
+
+
 		else
 		{
 			cout << "I don't understand where you want to " << com1 << "." << endl;
@@ -531,6 +567,167 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			gameOver = false;
 			break;
 		}
+		case 8: // attack 	
+			for(int i=0; i < roomStorage.size()-1; i++)
+			{
+				itemName = roomStorage.at(i).getName();
+				if(com2 == itemName)
+				{
+
+				}
+			}
+
+
+			if(!critter)
+			{
+				cout << "You cast magic missile at the darkness..." << endl;
+				cout << "OH, look! A Gazebo!" << endl;
+				cout << "If there are hot chicks at the tavern, I want to do them!!!!" << endl;
+				cout << "Do you have any Mountain Dew or Doritos?" << endl;
+			}
+
+			if(critter.getEssential() == true)
+			{
+				int randomTaunt = (rand() % 6) + 1;
+
+				switch(randomTaunt)
+				{
+					case 1:
+						cout << "You want to go to jail?" << endl;
+						break;
+	
+					case 2:
+						cout << "Without cause or warrant, trying to arrest or assaulting someone is against the law." << endl;
+						break;
+
+					case 3:
+						cout << "Remember your oath to serve and protect... need I remind you again?" << endl;
+						break;
+
+					case 4:
+						cout << "Nope. Tell Death, not Today." << endl;
+						break;
+
+					case 5: 
+						cout << "What are you, five? You can't just hit people." << endl;
+						break;
+
+					case 6: 
+						cout << "Uh-oh, looks like someone is getting feisty." << endl;
+						break;
+
+					default:
+						cout << "The author got lazy and didn't want to write anymore..." << endl;
+						break;
+
+
+				}
+				break;
+			}
+
+			if(critter.getInvcinble() == true)
+			{
+				int randomTaunt = (rand() % 6) + 1;
+
+				switch(randomTaunt)
+				{
+					case 1:
+						cout << "Your attack is utterly ineffective." << endl;
+						break;
+	
+					case 2:
+						cout << "Today, a God shall bleed, but not with how you are going at it." << endl;
+						break;
+
+					case 3:
+						cout << "That didn't work. Try something else." << endl;
+						break;
+
+					case 4:
+						cout << "Conventional means are ineffective." << endl;
+						break;
+
+					case 5: 
+						cout << "Hint: This isn't working. Try something else." << endl;
+						break;
+
+					case 6: 
+						cout << "Your blow is deflected and ineffective." << endl;
+						break;
+
+					default:
+						cout << "The author got lazy and didn't want to write anymore..." << endl;
+						break;
+
+
+				}
+				break;
+			}
+
+			p.setInCombat(true);
+			while(p.getInCombat() == true)
+			{
+				int attackResults;
+				int coinFlip = rand() % 2;
+
+				critterHealth = c.getHealth();
+				playerHealth = p.getHealth();
+				playerSanity = p.getSanity();
+
+				if(critterHealth <= 0)
+				{
+					inCombat = false
+					this->room.CritterID = 0;
+					// remove Critter from Room
+					// Add Corpse Object, will be
+					// critter ID + 10;
+					break;
+				}
+
+				if(playerHealth <= 0)
+				{
+					g.deathScreen();
+					gameOver = true;
+
+				}
+
+				if(playerSanity <= 0)
+				{
+					g.insanityScreen();
+					gameOver = true;
+				}
+
+				if(coinFlip == 0) // player goes first
+				{
+					attackResults = p.attackCritter();
+					attackResults = c.attackPlayer();
+
+
+				}
+				else // enemy goes first this round
+				{
+					attackResults = p.attackPlayer();
+					
+					playerHealth -= attackResults;
+					p.setHealth(playerHealth);
+					
+					attackResults = c.attackCritter();
+
+					critterHealth -= attackResults
+					if((c.getCritterID() == 103 || c.getCritterID() == 104)) && attackResults >= (c.getDamageValue() * .75));
+					{
+						attackResults = c.attackSanity();
+						playerSanity -= attackResults;
+						p.setSanity(playerSanity);
+					}
+				
+				}
+			}			
+				
+
+	// We need to do some special cases for the One Who Sleeps as it is more of a puzzle battle
+			// than an actual fight. The OWS still gets to attack though.
+
 	case 9999: //quit
 		gameOver = quit();
 		break;
@@ -555,6 +752,15 @@ void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage,Player &pl
 	{
 		room.displayDesc();
 		room.displayRoomItems(itemStorage);
+		if(room.getID() == 33)
+		{
+			int OWSID = 105;
+				if(room.CritterID == 105)
+				{
+					g.OneWhoSleeps();
+				}
+
+		}
 	}
 	else
 	{

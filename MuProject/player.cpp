@@ -15,6 +15,7 @@ Player::Player()
 	playerInventory.push_back(2);
 	playerInventory.push_back(3);
 	hasLight = false;
+	inCombat = false;
 }
 
 Player::Player(int health, int sanity)
@@ -104,5 +105,3 @@ void Player::getKeywords(vector<Item>& itemStorage, vector<string>& words)
 		}
 	}
 }
-
-

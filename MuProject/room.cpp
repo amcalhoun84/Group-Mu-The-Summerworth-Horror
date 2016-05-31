@@ -17,6 +17,7 @@ Room::Room(string name, string roomDescription, int id, int north, int south, in
 	this->indoor = indoor;
 	this->dark = dark;
 	this->visited = false;
+	this->critterID = critterID;
 }
 
 

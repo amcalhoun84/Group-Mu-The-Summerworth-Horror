@@ -13,9 +13,9 @@ class Room
 private:
 	string roomName;
 	string roomDescription;
-	
+
 	int roomID;
-	int critter;
+	int critterID;
 	int north;
 	int south;
 	int east;
@@ -27,11 +27,11 @@ private:
 	bool visited;
 	bool locked;
 	vector<int> roomItems;
-	
+
 
 public:
 
-	
+
 	Room(){};
 	Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark);
 	~Room(){};
@@ -88,7 +88,7 @@ public:
 	void displayDesc();
 	void displayName();
 	void getItemsVector(vector<int>&items) { items = this->roomItems; }
-	
+
 	void displayRoomItems(vector<Item> &itemStorage);
 	int move(string direction);
 

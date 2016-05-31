@@ -3,6 +3,7 @@ using namespace std;
 
 Critter::Critter()
 {
+	this->critterID = -1;
 	this->critterName = "Default Critter";
 	this->critterDesc = "You see a very non-descript critter. In fact, try clicking it about 30 times. See what happens."; // Warcraft/Starcraft reference.
 	this->critterShortDesc = "A critter!";
@@ -17,9 +18,10 @@ Critter::Critter()
 
 }
 
-Critter::Critter(string critterName, string critterDesc, string critterShortDesc, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused)
+Critter::Critter(int critterID, string critterName, string critterDesc, string critterShortDesc, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused)
 {
 
+	this->critterID = critterID; 
 	this->critterName = critterName;
 	this->critterDesc = critterDesc;
 	this->critterShortDesc = critterShortDesc;
@@ -37,7 +39,7 @@ Critter::~Critter()
 {
 }
 
-int Critter::attackCritter()
+int Critter::attackPlayer()
 {
 	attack = (rand() % damageValue) + 1;
 	return attack;

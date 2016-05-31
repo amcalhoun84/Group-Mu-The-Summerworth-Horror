@@ -20,7 +20,8 @@ private:
 
 	vector<string> keywords;
 
-	int health,
+	int critterID,
+		health,
 		arraySize,
 		damageValue,
 		sanityAttack;
@@ -34,10 +35,12 @@ private:
 
 public:
 	Critter();
-	Critter(string critterName, string critterDesc, string critterShortDesc, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused);
+	Critter(string critterName, string critterDesc, string critterShortDesc, vector<string> keywords, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused);
 	~Critter();
 
 	// setters
+	void setCritterID(int id) { this->critterID = id; }
+	void setName(string name) { this->critterName; }
 	void setHealth(int _health) { this->health = _health; }
 	void setDV(int _dv) { this->damageValue = _dv; }
 	void setSA(int _sa) { this->sanityAttack = _sa; }
@@ -46,14 +49,14 @@ public:
 	void setInvincible(bool _invincible) { this->invincible = _invincible; }
 	void setEvidence(bool _evidence) { this->evidence = _evidence; }
 	void setAccused(bool _accused) { this->accused = _accused; }
-	void setKeywords(vector<string>keywords) { this->keywords = keywords;}
 
 	// getters
+	int getCritterID() { return this->critterID; }
 	int getHealth() { return this->health; }
 	int getDV() { return this->damageValue; }
 	int getSA() { return this->sanityAttack; }
+	string getName() { return this->critterName; }
 
-	void addKeywords(string keyword) { this->keywords.push_back(keyword);}
 
 	// Combat Engine -- we don't need a separate class for this. These will be used in tandem
 	// with getters and setters. We just need to know the extend of damage done.

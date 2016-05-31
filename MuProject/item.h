@@ -23,8 +23,8 @@ private:
 	bool canCarry;
 	bool indestructible; // Can't destroy the item -- only false for certain plot items.
 	bool usable;
-	
-	
+
+
 
 public:
 
@@ -47,17 +47,17 @@ public:
 	void setUsable(bool setUse) { this->usable = setUse; }
 
 	// Getters
-	string getName() { return name; }
-	string getDesc() { return description; }
-	string getObjShort() { return shortDesc; }
+	string getName() { return this->name; }
+	string getDesc() { return this->description; }
+	string getObjShort() { return this->shortDesc; }
 
-	int getItemID() { return itemID; }
-	int getHealth() { return health; }
-	int getScore() { return scoreValue; }
+	int getItemID() { return this->itemID; }
+	int getHealth() { return this->health; }
+	int getScore() { return this->scoreValue; }
 
-	bool getCanCarry() { return canCarry; }
-	bool getIndestructible() { return indestructible; }
-	bool getUsable() { return usable; }
+	bool getCanCarry() { return this->canCarry; }
+	bool getIndestructible() { return this->indestructible; }
+	bool getUsable() { return this->usable; }
 
 	void addKeyword(string keyword) { this->keywords.push_back(keyword); }
 
