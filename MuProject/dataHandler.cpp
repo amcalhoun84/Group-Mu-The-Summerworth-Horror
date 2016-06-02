@@ -317,23 +317,12 @@ void loadItem(Item &item, vector<Item> &itemStorage)
 			{
 				marker = true;
 			}
-			item.setIndestructible(marker);
-			break;
-		case 7:
-			if (itemData == "0")
-			{
-				marker = false;
-			}
-			else
-			{
-				marker = true;
-			}
 			item.setUsable(marker);
 			break;
 		}
 		counter++;
 		
-		if (counter > 7)
+		if (counter > 6)
 		{
 			itemStorage.push_back(item); 
 			counter = 0;
