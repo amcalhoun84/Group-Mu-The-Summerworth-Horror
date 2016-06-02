@@ -38,6 +38,7 @@ public:
 	void setName(string name) { this->name = name; }
 	void setDesc(string desc) { this->description = desc; }
 	void setShort(string sdesc) { this->shortDesc = sdesc; }
+	void setItemId(int id) { itemID = id; }
 
 	void setHealth(int health) { this->health = health; }
 	void setScoreValue(int score) { this->scoreValue = score; }

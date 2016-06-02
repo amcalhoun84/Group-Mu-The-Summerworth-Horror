@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 #include "room.h"
+#include "critter.h"
+#include "item.h"
 
 using namespace std;
 
@@ -132,6 +134,209 @@ void loadRoom(Room &room, vector<Room> &roomStorage)
 		{
 			roomStorage.push_back(room); //This reads the Room object with all the values loaded from data file directly into the vector of Room objects
 			counter = 0; //This starts you over so you can put data into the next Room object
+		}
+	}
+}
+
+/*********************************************
+**loadCritter
+*********************************************/
+
+void loadCritter(Critter &critter, vector<Critter> &critterStorage)
+{
+	string critterData;
+	
+	ifstream critterFile;
+	critterFile.open("critterData.txt"); //Placeholder until path of critter file is known.
+	
+	if (!critterFile)
+	{
+		cout << "Error opening data file" << endl;
+	}
+	
+	int counter = 0;
+	stringstream ss;
+	int num;
+	string temp;
+	bool marker = false;
+	
+	while (getline(critterFile, critterData, ';'))
+	{
+		switch (counter)
+		{
+		case 0:
+			ss.str(critterData);
+			ss >> num;
+			critter.setCritterID(num);
+			break;
+		case 1:
+			critter.setName(critterData);
+			break;
+		case 2:
+			critter.setCritterDescription(critterData);
+			break;
+		case 3:
+			critter.setCritterShortDesc(critterData);
+			break;
+					
+		//Unsure of keywords vector implementation
+		case 4:
+			ss.str(critterData);
+			while (ss >> temp)
+			{
+				critter.keywords.push_back(temp);
+			}
+			break;
+		case 5:
+			ss.str(critterData);
+			ss >> num;
+			critter.setHealth(num);
+			break;
+		case 6:
+			ss.str(critterData);
+			ss >> num;
+			critter.setDV(num);
+			break;
+		case 7:
+			ss.str(critterData);
+			ss >> num;
+			critter.setSA(num);
+			break;
+		case 8:
+			if (critterData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			critter.setEssential(marker);
+			break;
+		case 9:
+			if (critterData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			critter.setInvincible(marker);
+			break;
+		case 10:
+			if (critterData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			critter.setEvidence(marker);
+			break;
+		case 11:
+			if (critterData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			critter.setAccused(marker);
+			break;
+		}
+		counter++;
+		
+		if (counter > 11)
+		{
+			critterStorage.push_back(critter); 
+			counter = 0;
+		}
+	}
+}
+
+/*********************************************
+**loadItem
+*********************************************/
+
+void loadItem(Item &item, vector<Item> &itemStorage)
+{
+	string itemData;
+	
+	ifstream itemFile;
+	itemFile.open("itemData.txt"); //Placeholder until path of item file is known.
+	
+	int counter = 0;
+	stringstream ss;
+	int num;
+	bool marker = false;
+	
+	while (getline(itemFile, itemData, ';'))
+	{
+		switch (counter)
+		{
+			//starting with item id
+		case 0:
+			ss.str(itemData);
+			ss >> num;
+			item.setItemId(num);
+			break;
+		case 1:
+			item.setName(itemData);
+			break;
+		case 2:
+			item.setDesc(itemData);
+			break;		
+		case 3:
+			item.setShort(itemData);
+			break;
+		case 4:
+			ss.str(itemData);
+			ss >> num;
+			item.setScoreValue(num);
+			break;
+		case 5:
+			if (itemData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			item.setCanCarry(marker);
+			break;
+		case 6:
+			if (itemData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			item.setIndestructible(marker);
+			break;
+		case 7:
+			if (itemData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			item.setUsable(marker);
+			break;
+		}
+		counter++;
+		
+		if (counter > 7)
+		{
+			itemStorage.push_back(item); 
+			counter = 0;
 		}
 	}
 }

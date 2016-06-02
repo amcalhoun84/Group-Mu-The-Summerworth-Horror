@@ -41,6 +41,8 @@ public:
 	// setters
 	void setCritterID(int id) { this->critterID = id; }
 	void setName(string name) { this->critterName; }
+	void setCritterDescription(string desc) {critterDesc = desc; }
+	void setCritterShortDesc(string desc) {critterShortDesc = desc; }
 	void setHealth(int _health) { this->health = _health; }
 	void setDV(int _dv) { this->damageValue = _dv; }
 	void setSA(int _sa) { this->sanityAttack = _sa; }
