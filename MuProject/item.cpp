@@ -1,24 +1,22 @@
 #include "item.h"
 #include <iostream>
-#include <string>
+#include<string>
 
 using namespace std;
 
-Item::Item(string name, string description, string shortDesc, int itemId, int scoreValue, int health, bool canCarry, bool usable, bool edible)
+
+Item::Item(string name, string description, string shortDesc, int itemId, int scoreValue, int damageValue, bool canCarry, bool usable, bool edible)
 {
 	this->name = name;
 	this->description = description;
 	this->shortDesc = shortDesc;
-	this->itemID = itemId;
+	this->itemId = itemId;
 	this->scoreValue = scoreValue;
-	this->health = health;
+	this->damageValue = damageValue;
 	this->canCarry = canCarry;
-	this->edible = edible;
 	this->usable = usable;
-
+	this->edible = edible;
 }
-
-
 
 void Item::displayDescription()
 {

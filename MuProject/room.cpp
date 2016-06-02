@@ -17,7 +17,6 @@ Room::Room(string name, string roomDescription, int id, int north, int south, in
 	this->indoor = indoor;
 	this->dark = dark;
 	this->visited = false;
-	this->critterID = critterID;
 }
 
 
@@ -77,7 +76,7 @@ void Room::getKeywords(vector<Item>& itemStorage, vector<string>& words)
 	{
 		for (int j = 0; j < itemStorage.size(); j++)
 		{
-			if (roomItems[i] == itemStorage[j].getItemID())
+			if (roomItems[i] == itemStorage[j].getItemId())
 			{
 				for (int k = 0; k < itemStorage[j].keywords.size(); k++)
 				{

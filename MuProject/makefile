@@ -1,9 +1,9 @@
 CXX = g++
 
-OBJS = MuProject.o room.o item.o helper.o parser.o player.o dataHandler.o 
+OBJS = MuProject.o room.o item.o helper.o parser.o player.o dataHandler.o critter.o 
 
-SRCS = MuProject.cpp room.cpp item.cpp helper.cpp parser.cpp player.cpp dataHandler.cpp
-HEADERS = room.h item.h helper.h parser.h player.h dataHandler.h
+SRCS = MuProject.cpp room.cpp item.cpp helper.cpp parser.cpp player.cpp dataHandler.cpp critter.cpp
+HEADERS = room.h item.h helper.h parser.h player.h dataHandler.h critter.h
 
 
 main: ${OBJS} ${HEADERS}

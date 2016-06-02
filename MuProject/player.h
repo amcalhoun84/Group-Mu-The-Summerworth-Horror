@@ -12,7 +12,6 @@ class Player
 {
 private:
 
-	bool inCombat;
 	int playerHealth;
 	int playerSanity;
 	int equippedItem;
@@ -31,17 +30,15 @@ public:
 	void setSanity(int sanity);
 	void setEquippedItem(int equippedItem);
 	void setHasLight(bool hasLight) { this->hasLight = hasLight; }
-	void setInCombat(bool inCombat) { this->inCombat = inCombat; }
 
 	int getHealth();
 	int getSanity();
 	int getEquippedItem();
 	bool getHasLight() { return this->hasLight; }
-	bool getInCombat() { return this->inCombat; }
 	void displayInventory(vector<Item> &itemStorage);
 	void addInventory(vector<Item> &itemStorage, int itemID);
 	void getItems(vector<Item> &itemStorage, vector<string>&items);
-
+	
 	void removeInventory(int itemID);
 	void getKeywords(vector<Item>& itemStorage, vector<string>& words);
 	void getItemsVector(vector<int>&items) { items = this->playerInventory; }

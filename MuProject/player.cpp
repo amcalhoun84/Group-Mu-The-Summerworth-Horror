@@ -11,11 +11,12 @@ Player::Player()
 {
 	playerHealth = 100;
 	playerSanity = 25;
-	playerInventory.push_back(1);
-	playerInventory.push_back(2);
 	playerInventory.push_back(3);
+	playerInventory.push_back(5);
+	playerInventory.push_back(9);
+	playerInventory.push_back(13);
+	playerInventory.push_back(204);
 	hasLight = false;
-	inCombat = false;
 }
 
 Player::Player(int health, int sanity)
@@ -61,7 +62,7 @@ void Player::displayInventory(vector<Item> &itemStorage)
 	{
 		for (int j = 0; j < itemStorage.size(); j++)
 		{
-			if (playerInventory[i] == itemStorage[j].getItemID())
+			if (playerInventory[i] == itemStorage[j].getItemId())
 			{
 				itemStorage[j].displayName();
 			}			
@@ -95,7 +96,7 @@ void Player::getKeywords(vector<Item>& itemStorage, vector<string>& words)
 	{
 		for (int j = 0; j < itemStorage.size(); j++)
 		{
-			if (playerInventory[i] == itemStorage[j].getItemID())
+			if (playerInventory[i] == itemStorage[j].getItemId())
 			{
 				for (int k = 0; k < itemStorage[j].keywords.size(); k++)
 				{
@@ -105,3 +106,5 @@ void Player::getKeywords(vector<Item>& itemStorage, vector<string>& words)
 		}
 	}
 }
+
+

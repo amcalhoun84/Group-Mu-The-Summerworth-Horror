@@ -15,6 +15,8 @@ bool callFunction(vector<Room> &roomStorage, vector<Item> &itemStorage, Room &ro
 void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage, Player &player, Room &room, int id);
 string getItemName(vector<Item> &itemStorage, int itemId);
 int getItemId(vector<Item> &itemStorage, Room &room, string item);
+bool checkLock(vector<Room> &roomStorage, int id);
+void unLock(vector<Room> &roomStorage, int id);
 bool quit();
 
 #endif

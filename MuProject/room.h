@@ -6,7 +6,6 @@
 #include "item.h"
 
 
-
 using namespace std;
 
 class Room
@@ -14,9 +13,9 @@ class Room
 private:
 	string roomName;
 	string roomDescription;
-
+	
 	int roomID;
-	int critterID;
+	int critter;
 	int north;
 	int south;
 	int east;
@@ -28,11 +27,11 @@ private:
 	bool visited;
 	bool locked;
 	vector<int> roomItems;
-
+	
 
 public:
 
-
+	
 	Room(){};
 	Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark);
 	~Room(){};
@@ -46,8 +45,8 @@ public:
 	void setRoomId(int room) { roomID = room;}
 	int getRoomId() { return roomID; }
 
-	void setCritter(int critter) { critterID = critter; }
-	int getCritter() { return critterID; }
+	void setCritter(int critter) { this->critter = critter; }
+	int getCritter() { return critter; }
 
 	void setNorth(int n) {north = n;}
 	int getNorth() { return north;}
@@ -64,7 +63,7 @@ public:
 	void setUp(int up) { this->up = up; }
 	int getUp() { return up; }
 
-	void setDown(int up) { this->up = up; }
+	void setDown(int down) { this->down = down; }
 	int getDown() { return down; }
 
 	void setIndoor(bool in) { indoor = in; }
@@ -89,7 +88,7 @@ public:
 	void displayDesc();
 	void displayName();
 	void getItemsVector(vector<int>&items) { items = this->roomItems; }
-
+	
 	void displayRoomItems(vector<Item> &itemStorage);
 	int move(string direction);
 

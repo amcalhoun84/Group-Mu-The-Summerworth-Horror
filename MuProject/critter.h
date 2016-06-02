@@ -18,9 +18,9 @@ private:
 		critterDesc,
 		critterShortDesc;
 
-	vector<string> keywords;
+	
 
-	int critterID,
+	int id,
 		health,
 		arraySize,
 		damageValue,
@@ -34,15 +34,21 @@ private:
 		accused;
 
 public:
+	vector<string> keywords;
+
 	Critter();
-	Critter(string critterName, string critterDesc, string critterShortDesc, vector<string> keywords, int health, int damageValue, int sanityAttack, bool essential, bool invincible, bool evidence, bool accused);
+	Critter(string critterName, string critterDesc, string critterShortDesc, int id, int damageValue, int sanityAttack, bool invincible, bool essential, bool evidence, bool accused);
+	
 	~Critter();
 
 	// setters
-	void setCritterID(int id) { this->critterID = id; }
-	void setName(string name) { this->critterName; }
-	void setCritterDescription(string desc) {critterDesc = desc; }
-	void setCritterShortDesc(string desc) {critterShortDesc = desc; }
+	//added additional setters for dataHandler
+	void setName(string name) { critterName = name; }
+	void setCritterDescription(string description) { critterDesc = description; }
+	void setCritterShortDesc(string description) { critterShortDesc = description; }
+	//void setCritterKeywords(string keyword) { keywords.push_back(keyword); }
+
+	void setId(int id) { this->id = id; }
 	void setHealth(int _health) { this->health = _health; }
 	void setDV(int _dv) { this->damageValue = _dv; }
 	void setSA(int _sa) { this->sanityAttack = _sa; }
@@ -52,12 +58,14 @@ public:
 	void setEvidence(bool _evidence) { this->evidence = _evidence; }
 	void setAccused(bool _accused) { this->accused = _accused; }
 
+	void addKeyword(string keyword) { this->keywords.push_back(keyword); }
+
 	// getters
-	int getCritterID() { return this->critterID; }
-	int getHealth() { return this->health; }
-	int getDV() { return this->damageValue; }
-	int getSA() { return this->sanityAttack; }
-	string getName() { return this->critterName; }
+	int getId() { return id; }
+	int getHealth() { return health; }
+	int getDV() { return damageValue; }
+	int getSA() { return sanityAttack; }
+
 
 
 	// Combat Engine -- we don't need a separate class for this. These will be used in tandem

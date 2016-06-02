@@ -1,6 +1,6 @@
-#include <string>
+#include<string>
 #include <iostream>
-#include <sstream>
+#include<sstream>
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
@@ -11,6 +11,8 @@
 #include "item.h"
 
 using namespace std;
+
+
 
 string getPlayerInput()
 {
@@ -63,11 +65,11 @@ int parseCommand(string command)
 	{
 		filter = 1; 
 	}
-	else if (com == "GET" || com == "TAKE" || com == "GRAB")
+	else if (com == "GET")
 	{
 		filter = 2;
 	}
-	else if (com == "LOOK" || com == "EXAMINE" || com == "INSPECT")
+	else if (com == "LOOK")
 	{
 		filter = 3;
 	}
@@ -75,7 +77,7 @@ int parseCommand(string command)
 	{
 		filter = 4;
 	}
-	else if (com == "EQUIP" || com == "WIELD")
+	else if (com == "EQUIP")
 	{
 		filter = 5;
 	}
@@ -86,10 +88,6 @@ int parseCommand(string command)
 	else if (com == "USE")
 	{
 		filter = 7;
-	}
-	else if (com == "ATTACK" || com == "FIGHT" || com == "KILL")
-	{
-		filter = 8;
 	}
 	else if (com == "QUIT")
 	{
@@ -131,108 +129,65 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			
 	switch (filter)
 	{
-	case -1: 
+	case -1: //invalid command
 		gameOver = false;
 		break;
 	case 1: //go or move
-		if (com2 == "NORTH")
+		if (com2 == "NORTH" || com2 == "SOUTH" || com2 == "EAST" || com2 == "WEST" || com2 == "UP" || com2 == "DOWN")
 		{
-			id = room.getNorth();
+			if (com2 == "NORTH")
+			{
+				id = room.getNorth();
+			}
+			else if (com2 == "SOUTH")
+			{
+				id = room.getSouth();
+			}
+			else if (com2 == "EAST")
+			{
+				id = room.getEast();
+			}
+			else if (com2 == "WEST")
+			{
+				id = room.getWest();
+			}
+			else if (com2 == "UP")
+			{
+				id = room.getUp();
+			}
+			else if (com2 == "DOWN")
+			{
+				id = room.getDown();
+			}
 			if (id == -1)
 			{
-				cout << "You can't " << com1 << " north. Try another command" << endl;
+				cout << "You can't " << com1 << " "<< com2 << ". Try another command" << endl;
+				gameOver = false;
+				break;
+			}
+			else if (checkLock(roomStorage, id))
+			{
+				cout << "I'm sorry. That room is locked." << endl;
 				gameOver = false;
 				break;
 			}
 			else
 			{
-				displayRoom(roomStorage, itemStorage, player, room, id);
-				gameOver = false;
-				break;
+				if (room.getDark() && !player.getHasLight())
+				{
+					cout << "You can't see to go anywhere!" << endl;
+					gameOver = false;
+					break;
+				}
+				else
+				{
+					displayRoom(roomStorage, itemStorage, player, room, id);
+					gameOver = false;
+					break;
+				}
 			}
 		}
-		else if (com2 == "SOUTH")
-		{
-			id = room.getSouth();
-			if (id == -1)
-			{
-				cout << "You can't " << com1 << " south. Try another command" << endl;
-				gameOver = false;
-				break;
-			}
-			else
-			{
-				displayRoom(roomStorage, itemStorage, player, room, id);
-				gameOver = false;
-				break;
-			}
-		}
-		else if (com2 == "EAST")
-		{
-			id = room.getEast();
-			if (id == -1)
-			{
-				cout << "You can't " << com1 << " east. Try another command" << endl;
-				gameOver = false;
-				break;
-			}
-			else
-			{
-				displayRoom(roomStorage, itemStorage, player, room, id);
-				gameOver = false;
-				break;
-			}
-		}
-		else if (com2 == "WEST")
-		{
-			id = room.getWest();
-			if (id == -1)
-			{
-				cout << "You can't " << com1 << " west. Try another command" << endl;
-				gameOver = false;
-				break;
-			}
-			else
-			{
-				displayRoom(roomStorage, itemStorage, player, room, id);
-				gameOver = false;
-				break;
-			}
-		}
-		else if (com2 == "UP")
-		{
-			id = room.getUp();
-			if (id == -1)
-			{
-				cout << "You can't " << com1 << " uplayer. Try another command" << endl;
-				gameOver = false;
-				break;
-			}
-			else
-			{
-				displayRoom(roomStorage, itemStorage, player, room, id);
-				gameOver = false;
-				break;
-			}
-		}
-		else if (com2 == "DOWN")
-		{
-			id = room.getDown();
-			if (id == -1)
-			{
-				cout << "You can't " << com1 << " down. Try another command" << endl;
-				gameOver = false;
-				break;
-			}
-			else
-			{
-				displayRoom(roomStorage, itemStorage, player, room, id);
-				gameOver = false;
-				break;
-			}
-		}
-
-
+		
 		else
 		{
 			cout << "I don't understand where you want to " << com1 << "." << endl;
@@ -420,37 +375,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 				}
 			
 				id = getItemId(itemStorage, room, com2);
-				
-				int playerHealth = player.getHealth();
-				int playerSanity = player.getSanity();
-
-				if (com2 == "TOMATO")
-				{
-					playerHealth += 15;
-					playerSanity += 5;
-				}
-
-				if (com2 == "BANANA") 
-				{
-					playerHealth += 10;
-					playerSanity += 10;
-				}
-
-				if (com2 == "ENERGY") 
-				{
-					playerHealth += 10;
-					playerSanity += 15;
-				}
-
-				if (com2 == "BAR")
-				{
-					playerHealth += 10;
-					playerSanity += 15;
-				}
-
 				player.removeInventory(id);
-				player.setHealth(playerHealth);
-				player.setSanity(playerSanity);
 				gameOver = false;
 				break;
 			}
@@ -492,8 +417,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 
 				gameOver = false;
 				break;
-			}
-			
+			}		
 		}
 		else
 		{			
@@ -534,7 +458,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			break;
 		}
 	case 7: //use
-		if (com2 == "FLASHLIGHT")
+		if (com2 == "FLASHLIGHT" || com2 == "KEY")
 		{	
 			vector<string> items;
 			player.getKeywords(itemStorage, items);
@@ -549,292 +473,76 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 
 			if (itemPresent)
 			{
-				cout << "You can see a lot better now!" << endl;
-				room.displayDesc();
-				room.displayRoomItems(itemStorage);
-				player.setHasLight(true);
-
-				gameOver = false;
-				break;
-			}
-			else
-			{
-				cout << "I don't know what you what to " << com1 << endl;
-				gameOver = false;
-				break;
-			}
-		}
-		else if (com2 == "KEY")
-		{
-			vector<string> items;
-			player.getKeywords(itemStorage, items);
-
-			for (int i = 0; i < items.size(); i++)
-			{
-				if (com2 == toUpperStr(items[i]))
+				if (com2 == "FLASHLIGHT")
 				{
-					itemPresent = true;
-				}
-			}
+					cout << "You can see a lot better now!" << endl;
+					room.displayDesc();
+					room.displayRoomItems(itemStorage);
+					player.setHasLight(true);
 
-			if (itemPresent)
-			{
-				cout << "The door is unlocked!" << endl;
-				room.setLocked(false);
-				gameOver = false;
-				break;
-			}
-			else
-			{
-				cout << "I don't know what you what to " << com1 << endl;
-				gameOver = false;
-				break;
-			}
-		}
-
-		else if (com2 == "ROSE" || "BLUE" || "BLUE ROSE" || "BLUEROSE" )
-		{
-			vector<string> items;
-			player.getKeywords(itemStorage, items);
-			for(int i = 0; i < items.size(); i++)
-			{
-				if(com2 == toUpperStr(items[i]))
-				{
-					itemPresent == true;
-				}
-
-				if(room.getID() == 33)
-				{
-					if(room.CritterID() == 105)
-					{
-						OWS.setHealth(this->critterHealth-1);
-
-						int attackResults;
-						playerHealth = player.getHealth();
-						playerSanity = player.getSanity();
-						attackResults = c.attackPlayer();
-						playerHealth -= attackResults;
-						player.setHealth(playerHealth);
-						attackResults = c.attackSanity();
-						playerSanity -= attackResults;
-						player.setSanity(playerSanity);
-
-
-						if(playerHealth <= 0)
-						{
-							g.deathScreen();
-							gameOver = true;
-						}
-						if(playerSanity <= 0)
-						{
-							d.insanityScreen()
-							gameOver = true;
-						}
-						player.removeInventory(203);
-					}
-				}
-				else
-				{
-					cout << "You admire a beautiful blue rose." << endl;
-				}
-			}
-		}
-		else
-		{
-			cout << "I don't know what you want to " << com1 << endl;
-			gameOver = false;
-			break;
-		}
-		case 8: // attack 	
-
-			// Rick, Kyle, I set up the harness for items, but I think we honestly should just skip items being destructible as it serves
-			// no greater purpose in the game. We can add this in if we want and have funny taunts, but meh.
-			//for(int i=0; i < roomStorage.size()-1; i++)
-			//{
-			//	itemName = roomStorage.at(i).getName();
-			//	if(com2 == itemName || itemKeyword)
-			//	{
-			//
-			//	}
-			//}
-
-			int critter = Room.getCritterID();
-
-			// ((rooms without critters might want to have the 0 id))
-
-			if(critter == 0)
-			{
-				int randomTaunt = (rand() % 6) + 1;
-
-				switch(randomTaunt)	// all these random taunts except for the last two are based off 
-				{
-					case 1:
-						cout << "You cast magic missile at the darkness..." << endl;
-						break;
-					case 2:
-						cout << "OH, look! A Gazebo!" << endl;
-						break; 
-					case 3:	
-						cout << "If there are hot chicks at the tavern, I want to do them!!!!" << endl;
-						break; 
-					case 4:
-						cout << "Do you have any Mountain Dew or Doritos?" << endl;
-						break;
-					case 5:
-						cout << "There's nothing there. And nothing is scarier." << endl;
-						break;
-					case 6:
-						cout << "Swing and a miss!" << endl;
-						break;
-					default:
-						cout << "The author went to go get a Coke and some cigarettes and never came back. I'm lonely..." << endl;
-						break;
-				}
-
-			}
-
-			if(critter.getEssential() == true)
-			{
-				int randomTaunt = (rand() % 6) + 1;
-
-				switch(randomTaunt)
-				{
-					case 1:
-						cout << "You want to go to jail?" << endl;
-						break;
-	
-					case 2:
-						cout << "Without cause or warrant, trying to arrest or assaulting someone is against the law." << endl;
-						break;
-
-					case 3:
-						cout << "Remember your oath to serve and protect... need I remind you again?" << endl;
-						break;
-
-					case 4:
-						cout << "Nope. Tell Death, not Today." << endl;
-						break;
-
-					case 5: 
-						cout << "What are you, five? You can't just hit people." << endl;
-						break;
-
-					case 6: 
-						cout << "Uh-oh, looks like someone is getting feisty." << endl;
-						break;
-
-					default:
-						cout << "The author got lazy and didn't want to write anymore..." << endl;
-						break;
-
-
-				}
-				break;
-			}
-
-			if(critter.getInvincible() == true)
-			{
-				int randomTaunt = (rand() % 6) + 1;
-
-				switch(randomTaunt)
-				{
-					case 1:
-						cout << "Your attack is utterly ineffective." << endl;
-						break;
-	
-					case 2:
-						cout << "Today, a God shall bleed, but not with how you are going at it." << endl;
-						break;
-
-					case 3:
-						cout << "That didn't work. Try something else." << endl;
-						break;
-
-					case 4:
-						cout << "Conventional means are ineffective." << endl;
-						break;
-
-					case 5: 
-						cout << "Hint: This isn't working. Try something else." << endl;
-						break;
-
-					case 6: 
-						cout << "Your blow is deflected and ineffective." << endl;
-						break;
-
-					default:
-						cout << "The author got lazy and didn't want to write anymore..." << endl;
-						break;
-
-
-				}
-				break;
-			}
-
-			player.setInCombat(true);
-			while(player.getInCombat() == true)
-			{
-				int attackResults;
-				int coinFlip = rand() % 2;
-
-				critterHealth = c.getHealth();
-				playerHealth = player.getHealth();
-				playerSanity = player.getSanity();
-
-				if(critterHealth <= 0)
-				{
-					inCombat = false
-					this->room.CritterID = 0;
-					// remove Critter from Room
-					// Add Corpse Object, will be
-					// critter ID + 10;
+					gameOver = false;
 					break;
 				}
-
-				if(playerHealth <= 0)
+				else if (com2 == "KEY")
 				{
-					g.deathScreen();
-					gameOver = true;
-
-				}
-
-				if(playerSanity <= 0)
-				{
-					g.insanityScreen();
-					gameOver = true;
-				}
-
-				if(coinFlip == 0) // player goes first
-				{
-					attackResults = player.attackCritter();
-					attackResults = c.attackPlayer();
-
-
-				}
-				else // enemy goes first this round
-				{
-					attackResults = player.attackPlayer();
-					
-					playerHealth -= attackResults;
-					player.setHealth(playerHealth);
-					
-					attackResults = c.attackCritter();
-
-					critterHealth -= attackResults
-					if((c.getCritterID() == 103 || c.getCritterID() == 104)) && attackResults >= (c.getDamageValue() * .75));
+					bool locked = false;
+					if (room.getNorth() != -1)
 					{
-						attackResults = c.attackSanity();
-						playerSanity -= attackResults;
-						player.setSanity(playerSanity);
+						if (checkLock(roomStorage, room.getNorth()))
+						{
+							id = room.getNorth();
+							locked = true;
+						}
 					}
-				
+					else if (room.getSouth() != -1)
+					{
+						if (checkLock(roomStorage, room.getSouth()))
+						{
+							id = room.getSouth();
+							locked = true;
+						}
+					}
+					else if (room.getEast() != -1)
+					{
+						if (checkLock(roomStorage, room.getEast()))
+						{
+							id = room.getEast();
+							locked = true;
+						}
+					}
+					else if (room.getWest() != -1)
+					{
+						if (checkLock(roomStorage, room.getWest()))
+						{
+							id = room.getWest();
+							locked = true;
+						}
+					}
+
+					if (locked)
+					{			
+						unLock(roomStorage, id);
+						cout << "The door is unlocked!" << endl;
+						gameOver = false;
+						break;
+					}
+					else
+					{
+						cout << "You don't need a key. All the doors are unlocked!" << endl;
+						gameOver = false;
+						break;
+					}
+					
 				}
-			}			
-				
-
-	// We need to do some special cases for the One Who Sleeps as it is more of a puzzle battle
-			// than an actual fight. The OWS still gets to attack though.
-
+			}
+			else
+			{
+				cout << "I don't know what you want to " << com1 << endl;
+				gameOver = false;
+				break;
+			}
+		}
+		
 	case 9999: //quit
 		gameOver = quit();
 		break;
@@ -844,7 +552,27 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 	}
 	return gameOver;
 }
-
+bool checkLock(vector<Room> &roomStorage, int id)
+{
+	for (int i = 0; i < roomStorage.size(); i++)
+	{
+		if (roomStorage[i].getRoomId() == id)
+		{
+			return roomStorage[i].getLocked();
+		}
+	}
+	
+}
+void unLock(vector<Room> &roomStorage, int id)
+{
+	for (int i = 0; i < roomStorage.size(); i++)
+	{
+		if (roomStorage[i].getRoomId() == id)
+		{
+			roomStorage[i].setLocked(false);
+		}
+	}
+}
 void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage,Player &player, Room &room, int id)
 {
 	for (int i = 0; i < roomStorage.size(); i++)
@@ -854,25 +582,17 @@ void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage,Player &pl
 			room = roomStorage[i];
 		}
 	}
-	room.displayName();
-	if (!room.getDark() || player.getHasLight())
-	{
-		room.displayDesc();
-		room.displayRoomItems(itemStorage);
-		if(room.getID() == 33)
+	
+		room.displayName();
+		if (!room.getDark() || player.getHasLight())
 		{
-			int OWSID = 105;
-				if(room.CritterID == 105)
-				{
-					g.OneWhoSleeps();
-				}
-
+			room.displayDesc();
+			room.displayRoomItems(itemStorage);
 		}
-	}
-	else
-	{
-		cout << "It's dark and you can't see anything!" << endl;
-	}
+		else
+		{
+			cout << "It's dark and you can't see anything!" << endl;
+		}
 	
 }
 
@@ -946,7 +666,7 @@ string getItemName(vector<Item> &itemStorage, int itemId)
 	string itemName = "";
 	for (int j = 0; j < itemStorage.size(); j++)
 	{
-		if (itemId == itemStorage[j].getItemID())
+		if (itemId == itemStorage[j].getItemId())
 		{
 			itemName = itemStorage[j].getName();
 		}
@@ -970,7 +690,7 @@ int getItemId(vector<Item> &itemStorage, Room &room, string item)
 			
 				if (toUpperStr(itemStorage[i].keywords[j]) == item)
 				{
-					id = itemStorage[i].getItemID();
+					id = itemStorage[i].getItemId();
 					for (int k = 0; k < items.size(); k++)
 					{
 						if (id == items[k])
@@ -1000,7 +720,7 @@ int getPlayerItemId(vector<Item> &itemStorage, Player &player, string item)
 
 			if (toUpperStr(itemStorage[i].keywords[j]) == item)
 			{
-				id = itemStorage[i].getItemID();
+				id = itemStorage[i].getItemId();
 				for (int k = 0; k < items.size(); k++)
 				{
 					if (id == items[k])
