@@ -21,7 +21,7 @@ private:
 	int health;     // how much damage can it take before it dies or breaks?
 					// booleans
 	bool canCarry;
-	bool indestructible; // Can't destroy the item -- only false for certain plot items.
+	bool edible; // Can't destroy the item -- only false for certain plot items.
 	bool usable;
 
 
@@ -39,6 +39,7 @@ public:
 	void setDesc(string desc) { this->description = desc; }
 	void setShort(string sdesc) { this->shortDesc = sdesc; }
 	void setItemId(int id) { itemID = id; }
+	void setEdible(bool eat) { edible = eat; }
 
 	void setHealth(int health) { this->health = health; }
 	void setScoreValue(int score) { this->scoreValue = score; }

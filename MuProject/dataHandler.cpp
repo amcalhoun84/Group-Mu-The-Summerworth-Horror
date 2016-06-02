@@ -319,10 +319,21 @@ void loadItem(Item &item, vector<Item> &itemStorage)
 			}
 			item.setUsable(marker);
 			break;
+		case 7:
+		if (itemData == "0")
+			{
+				marker = false;
+			}
+			else
+			{
+				marker = true;
+			}
+			item.setEdible(marker);
+			break;
 		}
 		counter++;
 		
-		if (counter > 6)
+		if (counter > 7)
 		{
 			itemStorage.push_back(item); 
 			counter = 0;

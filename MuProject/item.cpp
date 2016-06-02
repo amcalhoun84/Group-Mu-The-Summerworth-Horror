@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Item::Item(string name, string description, string shortDesc, int itemId, int scoreValue, int health, bool canCarry, bool indestructible, bool usable)
+Item::Item(string name, string description, string shortDesc, int itemId, int scoreValue, int health, bool canCarry, bool usable, bool edible)
 {
 	this->name = name;
 	this->description = description;
@@ -13,8 +13,9 @@ Item::Item(string name, string description, string shortDesc, int itemId, int sc
 	this->scoreValue = scoreValue;
 	this->health = health;
 	this->canCarry = canCarry;
-	this->indestructible = indestructible;
+	this->edible = edible;
 	this->usable = usable;
+
 }
 
 
