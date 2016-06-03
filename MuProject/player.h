@@ -15,6 +15,7 @@ private:
 	int playerHealth;
 	int playerSanity;
 	int equippedItem;
+	int score;
 
 	vector<int> playerInventory;
 	string characterName;

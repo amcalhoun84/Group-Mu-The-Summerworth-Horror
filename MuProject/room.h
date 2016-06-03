@@ -26,6 +26,7 @@ private:
 	bool dark;	// is the room dark when you enter?
 	bool visited;
 	bool locked;
+
 	vector<int> roomItems;
 	
 

@@ -89,6 +89,10 @@ int parseCommand(string command)
 	{
 		filter = 7;
 	}
+	else if (com == "TALK" || com == "QUESTION" || com == "INTERROGATE" || com == "INTEROGATE")
+	{
+		filter = 8;
+	}
 	else if (com == "QUIT")
 	{
 		filter = 9999;
@@ -217,10 +221,20 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			if (itemPresent)
 			{
 				id = getItemId(itemStorage, room, com2);
-				player.addInventory(itemStorage, id);
-				room.removeItem(roomStorage, id);
-				gameOver = false;
-				break;
+				if (canCarry(itemStorage, id))
+				{
+					player.addInventory(itemStorage, id);
+					room.removeItem(roomStorage, id);
+					gameOver = false;
+					break;
+				}
+				else
+				{
+					cout << "And just how do you think you are going to carry that?" << endl;
+					gameOver = false;
+					break;
+				}
+				
 			}
 			else
 			{
@@ -326,9 +340,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			break;
 		}
 	case 6: //eat 
-		if (com2 == "TOMATO" || com2 == "SANDWICH" || com2 == "BANANA" || com2 == "ENERGY" || com2 == "BAR")
-		{
-			vector<string> items;
+		
 			player.getKeywords(itemStorage, items);
 
 			for (int i = 0; i < items.size(); i++)
@@ -340,6 +352,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 			}
 			if (itemPresent)
 			{
+				
 				srand(time(NULL));
 				int randomTaunt = rand() % 6 + 1;
 
@@ -373,7 +386,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 					cout << "My writer got bored and forgot to include a taunt here... " << endl;
 					break;
 				}
-			
+
 				id = getItemId(itemStorage, room, com2);
 				player.removeInventory(id);
 				gameOver = false;
@@ -418,10 +431,9 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 				gameOver = false;
 				break;
 			}		
-		}
-		else
-		{			
-			srand(time(NULL));
+			
+					
+			/*srand(time(NULL));
 			int randomTaunt = rand() % 6 + 1;
 
 			switch (randomTaunt)
@@ -452,96 +464,96 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, Room &roo
 
 			default:
 				cout << "My writer got bored and forgot to include a taunt here... " << endl;
-				break;
-			}
+				break;*/
+			
 			gameOver = false;
 			break;
-		}
+		//}
 	case 7: //use
-		if (com2 == "FLASHLIGHT" || com2 == "KEY")
-		{	
-			vector<string> items;
-			player.getKeywords(itemStorage, items);
+		player.getKeywords(itemStorage, items);
 
-			for (int i = 0; i < items.size(); i++)
+		for (int i = 0; i < items.size(); i++)
+		{
+			if (com2 == toUpperStr(items[i]))
 			{
-				if (com2 == toUpperStr(items[i]))
-				{
-					itemPresent = true;
-				}
+				itemPresent = true;
 			}
+		}
 
-			if (itemPresent)
+		if (itemPresent)
+		{
+			if (com2 == "FLASHLIGHT")
 			{
-				if (com2 == "FLASHLIGHT")
-				{
-					cout << "You can see a lot better now!" << endl;
-					room.displayDesc();
-					room.displayRoomItems(itemStorage);
-					player.setHasLight(true);
+				cout << "You can see a lot better now!" << endl;
+				room.displayDesc();
+				room.displayRoomItems(itemStorage);
+				player.setHasLight(true);
 
-					gameOver = false;
-					break;
-				}
-				else if (com2 == "KEY")
-				{
-					bool locked = false;
-					if (room.getNorth() != -1)
-					{
-						if (checkLock(roomStorage, room.getNorth()))
-						{
-							id = room.getNorth();
-							locked = true;
-						}
-					}
-					else if (room.getSouth() != -1)
-					{
-						if (checkLock(roomStorage, room.getSouth()))
-						{
-							id = room.getSouth();
-							locked = true;
-						}
-					}
-					else if (room.getEast() != -1)
-					{
-						if (checkLock(roomStorage, room.getEast()))
-						{
-							id = room.getEast();
-							locked = true;
-						}
-					}
-					else if (room.getWest() != -1)
-					{
-						if (checkLock(roomStorage, room.getWest()))
-						{
-							id = room.getWest();
-							locked = true;
-						}
-					}
-
-					if (locked)
-					{			
-						unLock(roomStorage, id);
-						cout << "The door is unlocked!" << endl;
-						gameOver = false;
-						break;
-					}
-					else
-					{
-						cout << "You don't need a key. All the doors are unlocked!" << endl;
-						gameOver = false;
-						break;
-					}
-					
-				}
-			}
-			else
-			{
-				cout << "I don't know what you want to " << com1 << endl;
 				gameOver = false;
 				break;
 			}
+			else if (com2 == "KEY")
+			{
+				bool locked = false;
+				if (room.getNorth() != -1)
+				{
+					if (checkLock(roomStorage, room.getNorth()))
+					{
+						id = room.getNorth();
+						locked = true;
+					}
+				}
+				else if (room.getSouth() != -1)
+				{
+					if (checkLock(roomStorage, room.getSouth()))
+					{
+						id = room.getSouth();
+						locked = true;
+					}
+				}
+				else if (room.getEast() != -1)
+				{
+					if (checkLock(roomStorage, room.getEast()))
+					{
+						id = room.getEast();
+						locked = true;
+					}
+				}
+				else if (room.getWest() != -1)
+				{
+					if (checkLock(roomStorage, room.getWest()))
+					{
+						id = room.getWest();
+						locked = true;
+					}
+				}
+
+				if (locked)
+				{			
+					unLock(roomStorage, id);
+					cout << "The door is unlocked!" << endl;
+					gameOver = false;
+					break;
+				}
+				else
+				{
+					cout << "You don't need a key. All the doors are unlocked!" << endl;
+					gameOver = false;
+					break;
+				}				
+			}
+			else
+			{
+				cout << "You can't " << com1 << " that!" << endl;
+			}
 		}
+		else
+		{
+			cout << "I don't know what you want to " << com1 << endl;
+			gameOver = false;
+			break;
+		}
+		
 		
 	case 9999: //quit
 		gameOver = quit();
@@ -561,7 +573,7 @@ bool checkLock(vector<Room> &roomStorage, int id)
 			return roomStorage[i].getLocked();
 		}
 	}
-	
+	return false; //If id doesn't match for some reason, this stops program from crashing (and gets rid of warning)
 }
 void unLock(vector<Room> &roomStorage, int id)
 {
@@ -732,4 +744,30 @@ int getPlayerItemId(vector<Item> &itemStorage, Player &player, string item)
 		}
 	}
 	return id;
+}
+
+//bool isEdible(vector<Item> &itemStorage, int id)
+//{
+//	for (int i = 0; i < itemStorage.size(); i++)
+//	{
+//		for (int j = 0; j < itemStorage[i].keywords.size(); j++)
+//		{
+//			if (keyword == itemStorage[i].keywords[j])
+//			{
+//				return false;
+//			}
+//		}
+//	}
+//}
+
+bool canCarry(vector<Item> &itemStorage, int id)
+{
+	for (int i = 0; i < itemStorage.size(); i++)
+	{
+		if (itemStorage[i].getItemId() == id)
+		{
+			return itemStorage[i].getCanCarry();
+		}
+	}
+	return false;
 }

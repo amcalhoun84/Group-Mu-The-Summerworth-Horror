@@ -18,4 +18,6 @@ void loadItemKeywords(vector<Item> &itemStorage);
 
 void loadCritterKeywords(vector<Critter> &critterStorage);
 
+void loadRoomItems(vector<Room> &roomStorage);
+
 #endif

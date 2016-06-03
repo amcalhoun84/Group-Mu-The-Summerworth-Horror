@@ -11,11 +11,6 @@ Player::Player()
 {
 	playerHealth = 100;
 	playerSanity = 25;
-	playerInventory.push_back(3);
-	playerInventory.push_back(5);
-	playerInventory.push_back(9);
-	playerInventory.push_back(13);
-	playerInventory.push_back(204);
 	hasLight = false;
 }
 
@@ -87,7 +82,15 @@ void Player::getItems(vector<Item>& itemStorage, vector<string> &items)
 
 void Player::removeInventory(int itemID)
 {
-	playerInventory.erase(find(playerInventory.begin(), playerInventory.end(), itemID));
+	for (int i = 0; i < playerInventory.size(); i++)
+	{
+		if (playerInventory[i] == itemID)
+		{
+			swap(playerInventory[i], playerInventory[playerInventory.size()-1]);
+			playerInventory.pop_back();
+			break;
+		}
+	}
 }
 
 void Player::getKeywords(vector<Item>& itemStorage, vector<string>& words)

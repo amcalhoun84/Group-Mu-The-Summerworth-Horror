@@ -410,3 +410,30 @@ void loadCritterKeywords(vector<Critter>& critterStorage)
 		counter++;
 	}
 }
+
+void loadRoomItems(vector<Room>& roomStorage)
+{
+	string roomItems;
+	string word;
+
+	ifstream itemFile;
+	itemFile.open("roomItems.txt"); 
+
+	int counter = 0;
+
+	while (getline(itemFile, roomItems, ';'))
+	{
+		int num;
+		stringstream ss(roomItems);
+		while (ss >> word)
+		{
+			stringstream ss2(word);
+			ss2 >> num;
+			if (counter < roomStorage.size())
+			{
+				roomStorage[counter].addItem(num);
+			}
+		}
+		counter++;
+	}
+}

@@ -32,6 +32,7 @@ int main()
 	loadCritter(critter, critterStorage);
 	loadItemKeywords(itemStorage);
 	loadCritterKeywords(critterStorage);
+	loadRoomItems(roomStorage);
 
 	room = roomStorage[0];
 	room.displayName();
