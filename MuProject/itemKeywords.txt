@@ -73,7 +73,7 @@ case dossier casedossier packet;
 book leatherbook;
 legal documents legaldocuments;
 passport caleb'spassport calebpassport;
-serpentine dagger serpentinedagger knife curvyknife;
+serpentine dagger serpentinedagger curvyknife;
 skeleton key skeletonkey;
 signet ring signetring;
 strange book strangebook;
