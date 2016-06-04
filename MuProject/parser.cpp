@@ -588,11 +588,31 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 			}
 			else if (room.getCritter() == 101)
 			{
+				for (int i = 0; i < critterStorage.size(); i++)
+				{
+					if (critterStorage[i].getId() == 102)
+					{
+						if (critterStorage[i].getHealth() <= 0)
+						{
+							accuseCondition = true;
+						}
+					}
+				}
+				if (accuseCondition)
+				{
+					if (!player.hasItem(207) || !player.hasItem(216) || !player.hasItem(215))
+					{
+						accuseCondition = false;
+					}
+				}
 
 			}
 			else if (room.getCritter() == 102)
 			{
-
+				if (room.getRoomId() == 33)
+				{
+					accuseCondition = true;
+				}
 			}
 
 			for (int i = 0; i < critterStorage.size(); i++)
