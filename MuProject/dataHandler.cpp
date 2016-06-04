@@ -437,3 +437,42 @@ void loadRoomItems(vector<Room>& roomStorage)
 		counter++;
 	}
 }
+
+void loadCritterTalk(vector<Critter>& critterStorage)
+{
+	string critterData;
+
+	ifstream critterFile;
+	critterFile.open("critterTalk.txt"); 
+
+	int counter = 0;
+	int critterMarker = 0;
+
+	while (getline(critterFile, critterData, ';'))
+	{
+		switch (counter)
+		{
+			case 0:
+				critterStorage[critterMarker].setTalk1(critterData);
+				break;
+			case 1:
+				critterStorage[critterMarker].setTalk2(critterData);
+				break;
+			case 2:
+				critterStorage[critterMarker].setTalk3(critterData);
+				break;
+			case 3:
+				critterStorage[critterMarker].setAccuse1(critterData);
+				break;
+			case 4:
+				critterStorage[critterMarker].setAccuse2(critterData);
+				break;
+		}
+		counter++;
+		if (counter > 4)
+		{
+			counter = 0;
+			critterMarker++;
+		}
+	}
+}

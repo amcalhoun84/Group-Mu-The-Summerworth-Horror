@@ -30,11 +30,13 @@ public:
 	void setHealth(int health);
 	void setSanity(int sanity);
 	void setEquippedItem(int equippedItem);
+	void setScore(int score) { this->score = score; }
 	void setHasLight(bool hasLight) { this->hasLight = hasLight; }
 
 	int getHealth();
 	int getSanity();
 	int getEquippedItem();
+	int getScore() { return score; }
 	bool getHasLight() { return this->hasLight; }
 	void displayInventory(vector<Item> &itemStorage);
 	void addInventory(vector<Item> &itemStorage, int itemID);

@@ -20,4 +20,6 @@ void loadCritterKeywords(vector<Critter> &critterStorage);
 
 void loadRoomItems(vector<Room> &roomStorage);
 
+void loadCritterTalk(vector<Critter> &critterStorage);
+
 #endif

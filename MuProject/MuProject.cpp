@@ -9,44 +9,46 @@
 #include "parser.h"
 #include "player.h"
 #include "dataHandler.h"
-#include "MuProject.h"
+#include "helper.h"
 
 using namespace std;
 
 int main()
-{
-	Room room;
-	vector<Room> roomStorage;
-
+{		
 	Item item;
-	vector<Item> itemStorage;
-
+	Room room;
 	Critter critter;
-	vector<Critter> critterStorage;
-
 	Player player = Player();
 
+	vector<Room> roomStorage;
+	vector<Item> itemStorage;	
+	vector<Critter> critterStorage;
+	
 	loadRoom(room, roomStorage);
 	loadItem(item, itemStorage);
 	loadCritter(critter, critterStorage);
 	loadItemKeywords(itemStorage);
 	loadCritterKeywords(critterStorage);
 	loadRoomItems(roomStorage);
+	setCritters(roomStorage);
+	loadCritterTalk(critterStorage);
 
-	room = roomStorage[0];
-	room.displayName();
-	room.displayDesc();
-	room.displayRoomItems(itemStorage); 
+	displayRoom(roomStorage, itemStorage, critterStorage, player, room, 0);
 
 	bool gameOver = false;
 	string input;
 	int filter;
+	int counter;
 
 	while (!gameOver)
 	{		
 		input = getPlayerInput();			
 		filter = parseCommand(input);
-		gameOver = callFunction(roomStorage, itemStorage, room, player, filter, input);						
+		gameOver = callFunction(roomStorage, itemStorage, critterStorage, room, player, filter, input);
+		if (!gameOver)
+		{
+			gameOver = checkGameOver(roomStorage, itemStorage, room, player);
+		}
 	}
 	
 	return 0;

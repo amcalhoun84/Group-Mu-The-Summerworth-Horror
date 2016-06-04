@@ -99,6 +99,21 @@ void Room::displayName()
 	cout << roomName << endl;
 }
 
+void Room::displayCritter(vector<Critter>& critterStorage)
+{
+	if (this->critter != -1)
+	{
+		for (int i = 0; i < critterStorage.size(); i++)
+		{
+			if (critterStorage[i].getId() == this->critter)
+			{
+				cout << "You also see: " << endl;
+				cout << critterStorage[i].getShortDesc() << endl;
+			}
+		}
+	}
+	
+}
 
 void Room::displayRoomItems(vector<Item>& itemStorage)
 {
@@ -110,6 +125,60 @@ void Room::displayRoomItems(vector<Item>& itemStorage)
 		cout << getItemName(itemStorage,id) << endl;
 	}
 }
+
+void Room::displayDirections()
+{
+	cout << "Possible Directions to go: ";
+	if (north != -1)
+	{
+		cout << " North: Y, ";
+	}
+	else
+	{
+		cout << "North: N, ";
+	}
+	if (south != -1)
+	{
+		cout << " South: Y, ";
+	}
+	else
+	{
+		cout << " South: N, ";
+	}
+	if (east != -1)
+	{
+		cout << " East: Y, ";
+	}
+	else
+	{
+		cout << " East: N, ";
+	}
+	if (west != -1)
+	{
+		cout << " West: Y, ";
+	}
+	else
+	{
+		cout << "West: N, ";
+	}
+	if (up != -1)
+	{
+		cout << " Up: Y, ";
+	}
+	else
+	{
+		cout << " Up: N, ";
+	}
+	if (down != -1)
+	{
+		cout << " Down: Y " << endl;
+	}
+	else
+	{
+		cout << " Down: N " << endl;
+	}
+}
+	
 
 int Room::move(string direction)
 {

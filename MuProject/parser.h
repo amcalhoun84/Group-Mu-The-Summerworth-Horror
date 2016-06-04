@@ -7,6 +7,7 @@
 #include "item.h"
 #include "player.h"
 #include "helper.h"
+#include "critter.h"
 #include <iostream>
 #include<sstream>
 #include <vector>
@@ -17,8 +18,8 @@ using namespace std;
 
 string getPlayerInput();
 int parseCommand(string command);
-bool callFunction(vector<Room> &roomStorage, vector<Item> &itemStorage, Room &room, Player &player, int filter, string command);
-
+bool callFunction(vector<Room> &roomStorage, vector<Item> &itemStorage, vector<Critter> &critterStorage, Room &room, Player &player, int filter, string command);
+bool checkGameOver(vector<Room> &roomStorage, vector<Item> &itemStorage, Room &room, Player &player);
 bool quit();
 
 #endif

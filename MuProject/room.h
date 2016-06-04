@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "item.h"
+#include "critter.h"
 
 
 using namespace std;
@@ -87,9 +88,11 @@ public:
 
 	void displayDesc();
 	void displayName();
+	void displayCritter(vector<Critter> &critterStorage);
 	void getItemsVector(vector<int>&items) { items = this->roomItems; }
 	
 	void displayRoomItems(vector<Item> &itemStorage);
+	void displayDirections();
 	int move(string direction);
 	bool hasItem(int id);
 };

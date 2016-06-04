@@ -53,6 +53,8 @@ int Player::getEquippedItem()
 	return equippedItem;
 }
 
+
+
 void Player::displayInventory(vector<Item> &itemStorage)
 {
 	cout << "Your inventory: " << endl;

@@ -3,7 +3,6 @@
 
 using namespace std;
 
-//Thanks for the helper function Andrew
 string toUpperStr(string buffer)
 {
 	for (int i = 0; i<buffer.size(); i++)
@@ -184,4 +183,75 @@ string getItemDescription(vector<Item> &itemStorage, int id)
 		}
 	}
 	return description;
+}
+
+bool checkLock(vector<Room> &roomStorage, int id)
+{
+	for (int i = 0; i < roomStorage.size(); i++)
+	{
+		if (roomStorage[i].getRoomId() == id)
+		{
+			return roomStorage[i].getLocked();
+		}
+	}
+	return false; //If id doesn't match for some reason, this stops program from crashing (and gets rid of warning)
+}
+void unLock(vector<Room> &roomStorage, int id)
+{
+	for (int i = 0; i < roomStorage.size(); i++)
+	{
+		if (roomStorage[i].getRoomId() == id)
+		{
+			roomStorage[i].setLocked(false);
+		}
+	}
+}
+
+void setCritters(vector<Room>& roomStorage)
+{
+	for (int i = 0; i < roomStorage.size(); i++)
+	{
+		roomStorage[i].setCritter(-1);
+	}
+	roomStorage[12].setCritter(100);
+	roomStorage[21].setCritter(102);
+	roomStorage[25].setCritter(101);
+	roomStorage[33].setCritter(104);
+}
+void setCritters2(vector<Room> &roomStorage)
+{
+	roomStorage[21].setCritter(-1);
+	roomStorage[32].setCritter(102);
+	roomStorage[37].setCritter(103);
+
+}
+
+void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage, vector<Critter> &critterStorage, Player &player, Room &room, int id)
+{
+	for (int i = 0; i < roomStorage.size(); i++)
+	{
+		if (roomStorage[i].getRoomId() == id)
+		{
+			room = roomStorage[i];
+		}
+	}
+
+	room.displayName();
+	cout << endl;
+	if (!room.getDark() || player.getHasLight())
+	{
+		room.displayDesc();
+		cout << endl;
+		room.displayRoomItems(itemStorage);
+		room.displayCritter(critterStorage);
+		cout << endl;
+		room.displayDirections();
+		cout << endl;
+	}
+	else
+	{
+		cout << "It's dark and you can't see anything!" << endl;
+	}
+	
+
 }
