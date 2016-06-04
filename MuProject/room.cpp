@@ -134,3 +134,16 @@ int Room::move(string direction)
 	
 	return id;
 }
+
+bool Room::hasItem(int id)
+{
+	bool itemPresent = false;
+	for (int i = 0; i < roomItems.size(); i++)
+	{
+		if (roomItems[i] == id)
+		{
+			itemPresent = true;
+		}
+	}
+	return itemPresent;
+}

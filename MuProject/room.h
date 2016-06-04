@@ -31,7 +31,6 @@ private:
 	
 
 public:
-
 	
 	Room(){};
 	Room(string name, string roomDescription, int id, int north, int south, int east, int west, bool indoor, bool dark);
@@ -92,7 +91,9 @@ public:
 	
 	void displayRoomItems(vector<Item> &itemStorage);
 	int move(string direction);
-
+	bool hasItem(int id);
 };
 
 #endif
+
+

@@ -12,12 +12,15 @@ Player::Player()
 	playerHealth = 100;
 	playerSanity = 25;
 	hasLight = false;
+	playerInventory.push_back(209);
+
 }
 
 Player::Player(int health, int sanity)
 {
 	this->playerHealth = health;
 	this->playerSanity = sanity;
+	
 }
 
 void Player::setHealth(int health)
@@ -108,6 +111,19 @@ void Player::getKeywords(vector<Item>& itemStorage, vector<string>& words)
 			}
 		}
 	}
+}
+
+bool Player::hasItem(int id)
+{
+	bool itemPresent = false;
+	for (int i = 0; i < this->playerInventory.size(); i++)
+	{
+		if (this->playerInventory[i] == id)
+		{
+			itemPresent = true;
+		}
+	}
+	return itemPresent;
 }
 
 
