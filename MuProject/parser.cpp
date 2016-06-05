@@ -182,6 +182,10 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 				}
 				else
 				{
+					if (id == 43)
+					{
+						setCritters(roomStorage);
+					}
 					displayRoom(roomStorage, itemStorage, critterStorage, player, room, id);
 					gameOver = false;
 					break;
@@ -352,6 +356,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 				break;
 			}
 
+			cout << endl;
 			cout << "You gained 10 points of health" << endl;
 			int health = player.getHealth();
 			health = health + 10;
@@ -362,6 +367,16 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 			player.setHealth(health);
 			cout << "Your health is " << health << "/100" << endl;
 
+			cout << "You gained 5 points of sanity" << endl;
+			int sanity = player.getSanity();
+			sanity = sanity + 5;
+			if (sanity > 25)
+			{
+				sanity = 25;
+			}
+			player.setSanity(sanity);
+			cout << "Your sanity is " << sanity << "/25" << endl;
+											
 			player.removeInventory(id);
 			gameOver = false;
 			break;
