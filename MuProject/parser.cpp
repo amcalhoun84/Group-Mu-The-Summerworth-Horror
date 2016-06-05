@@ -552,6 +552,11 @@ bool checkGameOver(vector<Room>& roomStorage, vector<Item>& itemStorage, Room & 
 		cout << "You are dead! Game Over!" << endl;
 		return true;
 	}
+	else if(player.getSanity() <=0)
+	{
+		cout << "You have lost touch with reality! Game Over!" << endl;
+			return true;
+	}
 	else if (room.getRoomId() == 0 && player.hasItem(114) )
 	{
 		cout << "Congratulations! You have won the game!" << endl;
