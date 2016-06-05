@@ -238,21 +238,21 @@ int checkLock(vector<Room> &roomStorage, Room &room)
 			return room.getNorth();
 		}
 	}
-	else if (room.getSouth() != -1)
+	if (room.getSouth() != -1)
 	{
 		if (checkLock(roomStorage, room.getSouth()))
 		{
 			return room.getSouth();
 		}
 	}
-	else if (room.getEast() != -1)
+	if (room.getEast() != -1)
 	{
 		if (checkLock(roomStorage, room.getEast()))
 		{
 			return room.getEast();
 		}
 	}
-	else if (room.getWest() != -1)
+	if (room.getWest() != -1)
 	{
 		if (checkLock(roomStorage, room.getWest()))
 		{
