@@ -12,7 +12,7 @@ Player::Player()
 	playerHealth = 100;
 	playerSanity = 25;
 	hasLight = false;
-	playerInventory.push_back(209);
+	
 
 }
 
@@ -52,8 +52,6 @@ int Player::getEquippedItem()
 {
 	return equippedItem;
 }
-
-
 
 void Player::displayInventory(vector<Item> &itemStorage)
 {

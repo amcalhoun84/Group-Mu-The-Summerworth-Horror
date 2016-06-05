@@ -49,7 +49,7 @@ string getItemName(vector<Item> &itemStorage, int itemId)
 
 int getItemId(vector<Item> &itemStorage, Room &room, string item)
 {
-	int id = 0;
+	int id = -1;
 	vector<int> items;
 
 	bool endLoop = false;
@@ -107,9 +107,10 @@ int getPlayerItemId(vector<Item> &itemStorage, Player &player, string item)
 	return id;
 }
 
-int getIdFromItemVector(vector<Item> &itemStorage, string keyword)
+int getIdGet(vector<Item>& itemStorage, Room room, string keyword)
 {
 	int id = -1;
+	int counter = 0;
 
 	for (int i = 0; i < itemStorage.size(); i++)
 	{
@@ -119,58 +120,100 @@ int getIdFromItemVector(vector<Item> &itemStorage, string keyword)
 			if (toUpperStr(itemStorage[i].keywords[j]) == keyword)
 			{
 				id = itemStorage[i].getItemId();
-				//Makes sure knife is correct for get and drop commands
-				if (id == 3 || id == 208)
+
+				if (room.hasItem(id))
 				{
-					for (int k = 0; k < itemStorage[i].keywords.size(); k++)
-					{
-						if (itemStorage[i].keywords[k] == "bowie")
-						{
-							return 3;
-						}
-						else if (itemStorage[i].keywords[k] == "dagger")
-						{
-							return 208;				
-						}
-					}
-				}
-				else if (id == 209 || id == 214 || id == 217) //Makes sure key is correct for get and drop commands
-				{
-					for (int k = 0; k < itemStorage[i].keywords.size(); k++)
-					{
-						if (itemStorage[i].keywords[k] == "skeleton")
-						{
-							return 209;
-						}
-						else if (itemStorage[i].keywords[k] == "ritual")
-						{
-							return 214;
-						}
-						else if (itemStorage[i].keywords[k] == "dagger")
-						{
-							return 217;
-						}
-					}
-				}
-				else if (id == 205 || id == 211 ) //Makes sure book is correct for get and drop commands
-				{
-					for (int k = 0; k < itemStorage[i].keywords.size(); k++)
-					{
-						if (itemStorage[i].keywords[k] == "leather")
-						{
-							return 205;
-						}
-						else if (itemStorage[i].keywords[k] == "strange")
-						{
-							return 211;
-						}
-					}
+					counter++;
 				}
 			}
 		}
 	}
-	return id;
+
+	if (counter > 1)
+	{
+		cout << "Please use a descriptive word with your noun and type it as one word. For example: skeletonkey" << endl;
+		return -1;
+	}
+	else
+	{
+		for (int i = 0; i < itemStorage.size(); i++)
+		{
+			for (int j = 0; j < itemStorage[i].keywords.size(); j++)
+			{
+
+				if (toUpperStr(itemStorage[i].keywords[j]) == keyword)
+				{
+					id = itemStorage[i].getItemId();
+
+					if (room.hasItem(id))
+					{
+						return id;
+					}
+					else
+					{
+						id = -1;
+					}
+				}
+			}
+		}
+		return id;
+	}
+	
 }
+
+int getIdDrop(vector<Item>& itemStorage, Player player, string keyword)
+{
+	int id = -1;
+	int counter = 0;
+
+	for (int i = 0; i < itemStorage.size(); i++)
+	{
+		for (int j = 0; j < itemStorage[i].keywords.size(); j++)
+		{
+
+			if (toUpperStr(itemStorage[i].keywords[j]) == keyword)
+			{
+				id = itemStorage[i].getItemId();
+
+				if (player.hasItem(id))
+				{
+					counter++;
+				}
+			}
+		}
+	}
+
+	if (counter > 1)
+	{
+		cout << "Please use a descriptive word with your noun and type it as one word. For example: skeletonkey" << endl;
+		return -1;
+	}
+	else
+	{
+		for (int i = 0; i < itemStorage.size(); i++)
+		{
+			for (int j = 0; j < itemStorage[i].keywords.size(); j++)
+			{
+
+				if (toUpperStr(itemStorage[i].keywords[j]) == keyword)
+				{
+					id = itemStorage[i].getItemId();
+
+					if (player.hasItem(id))
+					{
+						return id;
+					}
+					else
+					{
+						id = -1;
+					}
+				}
+			}
+		}
+		return id;
+	}
+}
+
 
 string getItemDescription(vector<Item> &itemStorage, int id)
 {
@@ -183,6 +226,40 @@ string getItemDescription(vector<Item> &itemStorage, int id)
 		}
 	}
 	return description;
+}
+
+int checkLock(vector<Room> &roomStorage, Room &room)
+{
+	int id = -1;
+	if (room.getNorth() != -1)
+	{
+		if (checkLock(roomStorage, room.getNorth()))
+		{
+			return room.getNorth();
+		}
+	}
+	else if (room.getSouth() != -1)
+	{
+		if (checkLock(roomStorage, room.getSouth()))
+		{
+			return room.getSouth();
+		}
+	}
+	else if (room.getEast() != -1)
+	{
+		if (checkLock(roomStorage, room.getEast()))
+		{
+			return room.getEast();
+		}
+	}
+	else if (room.getWest() != -1)
+	{
+		if (checkLock(roomStorage, room.getWest()))
+		{
+			return room.getWest();
+		}
+	}
+	return id;
 }
 
 bool checkLock(vector<Room> &roomStorage, int id)
@@ -207,23 +284,62 @@ void unLock(vector<Room> &roomStorage, int id)
 	}
 }
 
-void setCritters(vector<Room>& roomStorage)
-{
-	for (int i = 0; i < roomStorage.size(); i++)
-	{
-		roomStorage[i].setCritter(-1);
-	}
-	roomStorage[12].setCritter(100);
-	roomStorage[21].setCritter(102);
-	roomStorage[25].setCritter(101);
-	roomStorage[33].setCritter(104);
-}
-void setCritters2(vector<Room> &roomStorage)
+
+void setCritters(vector<Room> &roomStorage)
 {
 	roomStorage[21].setCritter(-1);
 	roomStorage[32].setCritter(102);
 	roomStorage[37].setCritter(103);
 
+}
+
+bool keyMatch(int lockedRoom, int key)
+{
+	if (key == 209)
+	{
+		if (lockedRoom == 5)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (key == 210)
+	{
+		if(lockedRoom == 16 || lockedRoom == 18)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (key == 214)
+	{
+		if (lockedRoom == 33 )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (key == 217)
+	{
+		if (lockedRoom == 37)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return false; //just in no key id matches
 }
 
 void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage, vector<Critter> &critterStorage, Player &player, Room &room, int id)

@@ -30,7 +30,6 @@ int main()
 	loadItemKeywords(itemStorage);
 	loadCritterKeywords(critterStorage);
 	loadRoomItems(roomStorage);
-	setCritters(roomStorage);
 	loadCritterTalk(critterStorage);
 
 	displayRoom(roomStorage, itemStorage, critterStorage, player, room, 0);
