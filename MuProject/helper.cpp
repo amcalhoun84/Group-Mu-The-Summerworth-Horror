@@ -369,5 +369,5 @@ void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage, vector<Cr
 		cout << "It's dark and you can't see anything!" << endl;
 	}
 	
-
+	room.setVisited(true);
 }
