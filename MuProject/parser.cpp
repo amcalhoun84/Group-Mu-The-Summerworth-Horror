@@ -351,6 +351,17 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 				cout << "My writer got bored and forgot to include a taunt here... " << endl;
 				break;
 			}
+
+			cout << "You gained 10 points of health" << endl;
+			int health = player.getHealth();
+			health = health + 10;
+			if (health > 100)
+			{
+				health = 100;
+			}
+			player.setHealth(health);
+			cout << "Your health is " << health << "/100" << endl;
+
 			player.removeInventory(id);
 			gameOver = false;
 			break;
@@ -449,6 +460,46 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 					gameOver = false;
 					break;
 				}
+			}
+			else if (id == 213)
+			{
+				if (player.hasItem(205) || player.hasItem(211) || roomStorage[9].getVisited())
+				{
+					if (player.hasItem(205))
+					{
+						cout << "You use the note to decode the leather bound book from Mr. Brown's room. You learn..." << endl;
+					}
+					if (player.hasItem(211))
+					{
+						cout << "You use the note to decode the strange book from the hidden room. You learn..." << endl;
+					}
+					if (roomStorage[9].getVisited())
+					{
+						cout << "You use the note to decode the writing on the wall of that creepy bathroom. It loosely translates, THE ONE WHO SLEEPS COMETH" << endl;
+					}
+				}
+				else
+				{
+					cout << "It looks like a cypher used for decoding. If only you had a book with strange writing in it!" << endl;
+				}
+				gameOver = false;
+				break;
+			}
+			else if (id == 32)
+			{
+				cout << "You gained 25 health." << endl;
+				int health = player.getHealth();
+				health = health + 25;
+				if (health > 100)
+				{
+					health = 100;
+				}
+				player.setHealth(health);
+				cout << "Your health is " << health << "/100" << endl;
+				player.removeInventory(id);
+
+				gameOver = false;
+				break;
 			}
 			else
 			{
