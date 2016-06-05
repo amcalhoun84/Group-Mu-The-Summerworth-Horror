@@ -665,21 +665,28 @@ bool quit()
 		cout << "Do you really want to quit? Please enter Y or N:";
 		getline(cin, input);
 		input = toUpperStr(input);
-		if (input.at(0) == 'Y')
+		if (input.length() > 0)
 		{
-			cout << "You'll be back..." << endl;
-			invalid = false;
-			result = true;
-		}
-		else if (input.at(0) == 'N')
-		{
-			cout << "I knew you didn't really want to quit..." << endl;
-			invalid = false;
-			result = false;
+			if (input.at(0) == 'Y')
+			{
+				cout << "You'll be back..." << endl;
+				invalid = false;
+				result = true;
+			}
+			else if (input.at(0) == 'N')
+			{
+				cout << "I knew you didn't really want to quit..." << endl;
+				invalid = false;
+				result = false;
+			}
+			else
+			{
+				cout << "Please enter something that at least starts with y or n!" << endl;
+			}
 		}
 		else
 		{
-			cout << "Please enter something that at least starts with y or n!" << endl;
+			cout << "Please just answer the question already!" << endl;
 		}
 	}
 	return result;
