@@ -354,6 +354,7 @@ void Graphics::introScreen()
 	refresh();
 	wrefresh(titleScreen);
 	getch();
+	erase();
 	delwin(titleScreen);
 	
 	endwin();
@@ -363,27 +364,90 @@ void Graphics::introScreen()
 void Graphics::creditsScreen()
 {
 
-	WINDOW *creditScreen = newwin(0,0,0,0);
+	WINDOW *creditScreen = newwin(40,12,10,0);
+	erase();
 
 	initscr();
 
-	printw("Andrew M. Calhoun\nRick Sunstrom\nKyle Johnson\n");
+	start_color();
 
+
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(3, COLOR_GREEN, COLOR_BLACK);
+	init_pair(4, COLOR_WHITE, COLOR_BLACK);
+	init_pair(5, COLOR_RED, COLOR_BLACK);
+
+	wrefresh(creditScreen);
 	refresh();
-	usleep(2500000);
+
+	for(int i = 50; i >= 0; --i)
+	{		
+
+	attron(COLOR_PAIR(1));
+	mvprintw(i-33, 10, "	____ _  _ ___  ____ ____ _ _ _    _  _   ");  
+	mvprintw(i-32, 10, "	|__| |\\ | |  \\ |__/ |___ | | |    |\\/|   ");  
+	mvprintw(i-31, 10, "	|  | | \\| |__/ |  \\ |___ |_|_|    |  | . ");  
+	mvprintw(i-30, 10, "	                                         ");  
+	mvprintw(i-29, 10, "	   ____ ____ _    _  _ ____ _  _ _  _    ");  
+	mvprintw(i-28, 10, "	   |    |__| |    |__| |  | |  | |\\ |    ");  
+	mvprintw(i-27, 10, "	   |___ |  | |___ |  | |__| |__| | \\|    ");  
+	mvprintw(i-26, 10, "	                                         ");  
+	attroff(COLOR_PAIR(1));
+	mvprintw(i-25, 10, "	                                         ");  
+	mvprintw(i-24, 10, "	                                         ");  
+	mvprintw(i-23, 10, "	                                         ");  
+	mvprintw(i-22, 10, "	                                         ");  
+	attron(COLOR_PAIR(2));
+	mvprintw(i-21, 10, "	   ____ _ ____ _  _ ____ ____ ___        ");  
+	mvprintw(i-20, 10, "	   |__/ | |    |__| |__| |__/ |  \\       ");  
+	mvprintw(i-19, 10, "	   |  \\ | |___ |  | |  | |  \\ |__/       ");  
+	mvprintw(i-18, 10, "	                                         ");  
+	mvprintw(i-17, 10, "	____ _  _ _  _ ____ ___ ____ ____ _  _   ");  
+	mvprintw(i-16, 10, "	[__  |  | |\\ | [__   |  |__/ |  | |\\/|   ");  
+	mvprintw(i-15, 10, "	___] |__| | \\| ___]  |  |  \\ |__| |  |   ");  
+	attroff(COLOR_PAIR(2));
+	mvprintw(i-14, 10, "	                                         ");  
+	mvprintw(i-13, 10, "	                                         ");  
+	mvprintw(i-12, 10, "	                                         ");  
+	mvprintw(i-11, 10, "	                                         ");  
+	mvprintw(i-10, 10, "	                                         ");  
+	attron(COLOR_PAIR(3));
+	mvprintw(i-9, 10, "	      _  _ _   _ _    ____               ");  
+	mvprintw(i-8, 10, "	      |_/   \\_/  |    |___               ");  
+	mvprintw(i-7, 10, "	      | \\_   |   |___ |___               ");  
+	mvprintw(i-6, 10, "	                                         ");  
+	mvprintw(i-5, 10, "	 _ ____ _  _ _  _ ____ ____ _  _         ");  
+	mvprintw(i-4, 10, "	 | |  | |__| |\\ | [__  |  | |\\ |         ");  
+	mvprintw(i-3, 10, "	_| |__| |  | | \\| ___] |__| | \\|         ");  
+	mvprintw(i-2, 10, "	                                       ");
+	attroff(COLOR_PAIR(3));
+	mvprintw(i-1, 10, "  INSPIRED BY THE WORKS OF H.P. Lovecraft	");  
+	mvprintw(i, 10, " 	                                     ");
+
+	wrefresh(creditScreen);
+	refresh();
+	usleep(500000);
+
+	}
+
 	delwin(creditScreen);
-	
+	erase();
 	endwin();
 }
+
 
 void Graphics::noncursialAmulet()
 {
 	WINDOW *nonCursial = newwin(12,40,10,0);
 	initscr();
-
+	erase();
 	start_color();
 
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
+
+	refresh();
+	wrefresh(nonCursial);
 
 	wmove(nonCursial, 0, 5);
 	attron(COLOR_PAIR(2));
@@ -431,6 +495,8 @@ void Graphics::noncursialAmulet()
 	wrefresh(nonCursial);
 
 	getch();
+	delwin(nonCursial);
+	erase();
 	endwin();
 }
 
@@ -439,7 +505,7 @@ void Graphics::noncursialBook()
 {
 	WINDOW *nonCursial = newwin(12,40,10,0);
 	initscr();
-
+	erase();
 	start_color();
 
 	init_pair(2, COLOR_BLACK, COLOR_YELLOW);
@@ -447,6 +513,10 @@ void Graphics::noncursialBook()
 	wmove(nonCursial, 0, 5);
 	attron(COLOR_PAIR(2));
 	attron(A_BOLD);
+
+	refresh();
+	wrefresh(nonCursial);
+
 	mvprintw(0, 5, "!|+|			                _ 				|\\|");
 	mvprintw(1, 5, "!|/|                                   |_ 					|\\|");
 	mvprintw(2, 5, "!|/|                                   | ) 				|\\|");
@@ -486,11 +556,15 @@ void Graphics::noncursialBook()
 	mvprintw(36, 5, "!|/|                                    -. 				|\\|");
 	mvprintw(37, 5, "!|/|                                     )) 				|\\|");
 	mvprintw(38, 5, "!|_|                                    -' 				|\\|");
+	attroff(COLOR_PAIR(2));
+
 
 	refresh();
 	wrefresh(nonCursial);
 
 	getch();
+	delwin(nonCursial);
+	erase();
 	endwin();
 
 }
@@ -500,6 +574,7 @@ void Graphics::oneWhoSleeps()
 
 	WINDOW *OWS = newwin(0,0,0,0);
 	initscr();
+	erase();
 
 	start_color();
 
@@ -789,11 +864,12 @@ void Graphics::oneWhoSleeps()
 	mvprintw(47,0, ".---.`    ````                     ``.---:///////: ://///::/::--.`                ``-`              \n");
 	mvprintw(48,0, ":----`                           `.::///:////////- :////////--::--.                 `            ```\n");
 	mvprintw(49,0, "--:::.                      ``..-::::::::///:///:-`:////////::::/::`                   `.`      .---\n");
-	mvprintw(50,0, ":::-`                       ``   `````.://:-:///:--::://::::::-.-:::-.`               `.`   `` `----\n");
+	mvprintw(50,0, ":::-`   PRESS ANY KEY TO FIGHT   `````.://:-:///:--::://::::::-.-:::-.`   PRESS ANY KEY TO FIGHT----\n");
 	
 	refresh();
 	delwin(OWS);
 	getch();
+	erase();
 	endwin();
 
 }
@@ -804,6 +880,7 @@ void Graphics::deathScreen()
 	WINDOW *gameOver = newwin(40,12,10,0);
 	initscr();
 	start_color();
+	erase();
 
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 
@@ -1296,6 +1373,7 @@ printw("\t\t `-://++oossssyyyyyyyyyyys++/////::-       \n");
 	refresh();
 
 	delwin(gameOver);
+	erase();
 	endwin();
 }
 
@@ -1304,6 +1382,7 @@ void Graphics::insanityScreen()
 
 	WINDOW *insane = newwin(40,12,10,0);
 	initscr();
+	erase();
 
 	wrefresh(insane);
 	refresh();
@@ -1353,6 +1432,7 @@ mvprintw(37, 5, "			...................,................................,.....,	
 
 	getch();
 	delwin(insane);
+	erase();
 	endwin();
 
 }
@@ -1362,7 +1442,9 @@ void Graphics::wallText()
 
 	WINDOW *wallWriting = newwin(12,40,10,0);
 	initscr();
+	erase();
 
+	refresh();
 	wrefresh(wallWriting);
 
 	mvprintw(0, 10,"                                                                                                    ");
@@ -1407,6 +1489,7 @@ void Graphics::wallText()
 	wrefresh(wallWriting);
 	getch();
 	delwin(wallWriting);
+	erase();
 	
 	endwin();
 

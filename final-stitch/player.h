@@ -15,6 +15,7 @@ private:
 	int playerHealth;
 	int playerSanity;
 	int equippedItem;
+	int damageValue;
 	int score;
 	int attack;
 
@@ -45,11 +46,14 @@ public:
 	void displayInventory(vector<Item> &itemStorage);
 	void addInventory(vector<Item> &itemStorage, int itemID);
 	void getItems(vector<Item> &itemStorage, vector<string>&items);
-	
+    void setDamageValue(int _dv) { damageValue = _dv; }
+
+
 	void removeInventory(int itemID);
 	void getKeywords(vector<Item>& itemStorage, vector<string>& words);
 	void getItemsVector(vector<int>&items) { items = this->playerInventory; }
 	bool hasItem(int id);
+	int getDamageValue() { return damageValue; }
 	int playerAttack();
 
 

@@ -90,10 +90,17 @@ int parseCommand(string command)
 	{
 		filter = 9;
 	}
+	else if (com == "DEVCHECK")
+	{
+		filter = 10; 
+		
+	}
 	else if (com == "QUIT")
 	{
 		filter = 9999;
 	}
+
+
 	else
 	{
 		cout << "That is an invalid command. Try again" << endl;
@@ -210,8 +217,9 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 
 		else if (com2 == "RECORD")
 		{
-			cout << "Health:" << player.getHealth() << " / 100" << endl;
-			cout << "Sanity:" << player.getSanity() << " / 50" << endl;
+			cout << "Health: " << player.getHealth() << " / 100" << endl;
+			cout << "Sanity: " << player.getSanity() << " / 50" << endl;
+			cout << "You currently do " << player.getDamageValue() << " (up to) per attack." << endl;
 		}
 
 		else
@@ -264,29 +272,29 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 				
 				else if(id == 38)
 				{
-
-					cout << getItemDescription(itemStorage, id) << endl;
+					for(int i = 0; i < roomStorage.size(); i++)
+					cout << getItemDescription(itemStorage, id, graphics) << endl;
 					gameOver = false;
 					break;
 				}
 
 				else if(id == 205)
 				{
-					cout << getItemDescription(itemStorage, id) << endl;
+					cout << getItemDescription(itemStorage, id, graphics) << endl;
 					gameOver = false;
 					break;
 				}
 
 				else if(id == 215)
 				{
-					cout << getItemDescription(itemStorage, id) << endl;
+					cout << getItemDescription(itemStorage, id, graphics) << endl;
 					gameOver = false;
 					break;
 				}
 
 				else
 				{
-					cout << getItemDescription(itemStorage, id) << endl;
+					cout << getItemDescription(itemStorage, id, graphics) << endl;
 					gameOver = false;
 					break;
 				}
@@ -300,7 +308,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 				}
 				else
 				{
-					cout << getItemDescription(itemStorage, id) << endl;
+					cout << getItemDescription(itemStorage, id, graphics) << endl;
 					gameOver = false;
 					break;
 				}	
@@ -340,7 +348,14 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 			{
 				player.setEquippedItem(id);
 				cout << "You equipped " << getItemName(itemStorage, id) << endl;
-				// player.setDamageValue();
+				if(id==3)
+					player.setDamageValue(6);
+				if(id==9)
+					player.setDamageValue(10);
+				if(id==99)
+					player.setDamageValue(4);
+				if(id==208)
+					player.setDamageValue(6);
 				gameOver = false;
 				break;
 			}
@@ -488,6 +503,15 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 					break;
 				}
 			}
+			else if (id == 210 && room.getRoomId() == 14)
+			{
+				room.setNorth(18);
+				unLock(roomStorage, 18);
+
+				cout << "Inspecting the odd fixture, you notice that there is an indentation that fits the signet ring. When you place the ring in and twist it, you hear a click and the odd panel moves to the side." << endl;
+				break;
+			}
+
 			else if (id == 209 || id == 210 || id == 214 || id == 217) //These are the 3 game keys + 210 is signet ring
 			{
 				int lockedRoom = checkLock(roomStorage, room);
@@ -523,16 +547,27 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 				{
 					if (player.hasItem(205))
 					{
-						cout << "You use the note to decode the leather bound book from Mr. Brown's room. You learn about the history of the Summerworth Estate and the cult to a being known as the One Who Sleeps that had a gathering here nearly a century ago and the methods that were used to summon the entity." << endl;
+						cout << "You use the note to decode the leather bound book from Mr. Brown's room. You learn about the history of the Summerworth Estate and the cult to a being known as the One Who Sleeps that had a gathering here nearly a century ago and the methods that were used to summon the entity." << endl << endl;
 					}
 					if (player.hasItem(211))
 					{
-						cout << "You use the note to decode the strange book from the hidden room. You learn how the One Who Sleeps was banished from the world, and see notes implicating Alfred the Gardner and Mr. Brown in the murders." << endl;
+						cout << "You use the note to decode the strange book from the hidden room. You learn how the One Who Sleeps was banished from the world, and see notes implicating Alfred the Gardner in the murders. Also, there is discussions of how to summon and how to banish the being. Words about the family's famous blue roses, a holy artifact of silver, and the remains of an extradimensional being are mentioned." << endl << endl;
 					}
 					if (roomStorage[9].getVisited())
 					{
 						cout << "You use the note to decode the writing on the wall of that creepy bathroom. It loosely translates, THE ONE WHO SLEEPS COMETH" << endl;
 					}
+
+					for(int i=0; i < critterStorage.size(); i++)
+					{
+						if(critterStorage[i].getId() == 100)
+						{
+							critterStorage[i].setAccused(true);
+							critterStorage[i].setEvidence(true);
+							cout << "You feel like it might be a good time to talk to Alfred..." << endl;
+						}
+					}
+
 				}
 				else
 				{
@@ -607,7 +642,8 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 			{
 				if(room.getRoomId() != 33)
 				{
-					cout << "You fiddle with the rose, but nothing happens.";
+					cout << "You fiddle with the rose, but nothing happens." << endl;
+					break;
 				}
 				else
 				{
@@ -652,18 +688,14 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 
 			else if (id == 212)
 			{
-				if(room.getRoomId() != 33 || room.getRoomId() != 37)
-				{
-					cout << "You fiddle with the cross, but nothing happens.";
-				}
-				else
+				if(room.getRoomId() == 33)
 				{
 					for(int i = 0; i < critterStorage.size(); i++)
 					{
 						int sanity;
 						int health;
 						
-						if(critterStorage[i].getId() == 104)
+						if(critterStorage[i].getId() == 104 && room.getRoomId() == 33)
 						{
 
 							health = critterStorage[i].getHealth();
@@ -676,7 +708,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 							health = player.getHealth();
 							health -= critterStorage[i].attackCritter();
 							sanity = player.getSanity();
-							sanity -= critterStorage[i].attackSanity();
+							//sanity -= critterStorage[i].attackSanity();
 							player.setHealth(health);
 							player.setSanity(sanity);
 
@@ -688,10 +720,11 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 								cout << "A small vial of ectoplasm falls to the floor with a soft tinkling noise." << endl;
 								room.setCritter(0);
 								room.addItem(roomStorage, 114);
+								break;
 							}
 
 						}
-						else if(critterStorage[i].getId() == 103)
+					else if(room.getRoomId() == 37)
 						{
 							cout << "The mist corporealizes into a vaguely humanoid form!" << endl;
 
@@ -733,11 +766,13 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 									if(attack >= 3)
 									{	
 										sanity = player.getSanity();
-										attack = critterStorage[i].attackSanity();
+									//	attack = critterStorage[i].attackSanity();
 										sanity -= attack;
 										player.setSanity(sanity);
 										cout << "You feel a bit of your sanity slipping." << endl;
+
 									}
+									break;
 								}
 
 							}
@@ -748,6 +783,13 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 					break;
 
 				}
+				else
+				{
+					cout << "You fiddle with the cross, but nothing happens." << endl;
+					break;
+				}
+				
+
 			}
 							
 			
@@ -789,125 +831,189 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 		{
 			if (room.getCritter() == 100)
 			{
-
-			}
-			else if (room.getCritter() == 101)
-			{
-				for (int i = 0; i < critterStorage.size(); i++)
-				{
-					if (critterStorage[i].getId() == 102)
-					{
-						if (critterStorage[i].getHealth() <= 0)
-						{
-							accuseCondition = true;
-						}
-					}
-				}
-				if (accuseCondition)
-				{
-					if (!player.hasItem(207) || !player.hasItem(216) || !player.hasItem(215))
-					{
-						accuseCondition = false;
-					}
-				}
-
-			}
-			else if (room.getCritter() == 102)
-			{
-				if (room.getRoomId() == 32)
+				if(player.hasItem(205) && player.hasItem(211) && player.hasItem(213))
 				{
 					accuseCondition = true;
-				}
-			}
-
-			for (int i = 0; i < critterStorage.size(); i++)
-			{
-				if (critterStorage[i].getId() == room.getCritter())
-				{
-					if (!accuseCondition)
+					for(int i = 0; i < critterStorage.size(); i++)
 					{
-						critterStorage[i].displayAccuse1();
-					}
-					else
-					{
-						critterStorage[i].displayAccuse2();
-						player.setInCombat(true);
-						while(player.getInCombat() == true)
+						if(critterStorage[i].getId() == 100 && (player.hasItem(205) && player.hasItem(211) && player.hasItem(213)))
 						{
-							checkGameOver(roomStorage, itemStorage, room, player, graphics);
+							critterStorage[i].displayAccuse2();
+							player.setInCombat(true);
+							cout << "Alfred lunges at you, brandishing deadly shears!" << endl;
+							while(player.getInCombat() == true)
+							{							
 
-							int attackResults;
-							int critterHealth;
-							int sanityAttack;
-							int playerHealth, playerSanity;
-							int randomTaunt;
+								checkGameOver(roomStorage, itemStorage, room, player, graphics);
 
-							int coinFlip = rand() % 2;
-							if(coinFlip==0)
-							{
-								attackResults = player.playerAttack();
-								critterHealth = critterStorage[i].getHealth();
-								critterHealth -= attackResults;
-								critterStorage[i].setHealth(critterHealth);
-							}
-							else
-							{
-								attackResults = critterStorage[i].attackCritter();
-								playerHealth = player.getHealth();
-								playerHealth -= attackResults;
-								player.setHealth(playerHealth);
-								if(critterStorage[i].getId() == 102 && attackResults >= 3)
-								{
-								
-									randomTaunt = (rand() % 3) + 1;
+								int attackResults = 0;
+								int critterHealth = 0;
+								int sanityAttack = 0;
+								int playerHealth = 0, playerSanity = 0;
+								int randomTaunt = 0;
 
-									switch(randomTaunt)
+									int coinFlip = rand() % 2;
+									if(coinFlip==0)
 									{
-										case 1:
-										cout << "The foul curses uttered by Mr. Brown make your sanity slip slightly..." << endl;
-										break;
+										attackResults = player.playerAttack();
+										critterHealth = critterStorage[i].getHealth();
+										critterHealth -= attackResults;
+										critterStorage[i].setHealth(critterHealth);
+										cout << "You hit Alfred for " << attackResults << "!" << endl;
+										cout << "He has " << critterHealth  << " / 60 left!" << endl;
+									}
+									else if(coinFlip==1)
+									{
+										attackResults = critterStorage[i].attackCritter();
+										playerHealth = player.getHealth();
+										playerHealth -= attackResults;
+										player.setHealth(playerHealth);
+										cout << "Alfred hits you for " << attackResults << " damage!" << endl;
+										cout << "You have " << playerHealth << " / 100 left." << endl;
+									}
 
-										case 2:
-										cout << "The One Who Sleeps Shall Devour Your SOUL!, Mr. Brown cries." << endl;
-										break;
-
-										case 3:
-										cout << "When Mr. Brown touches you, you feel your grip on reality loosen." << endl;
-										break;
-
-										default:
-										cout << "You feel like you need to take a long vacation after this..." << endl;
+									if(critterStorage[i].getHealth() <= 0)
+									{	
+										room.setCritter(0);
+										room.addItem(roomStorage, 110);
+										room.addItem(roomStorage, 217);
+										cout << "Alfred lets out a wheezing gasp about the blue rose as you put him down. You stop for a moment to collect yourself, sweat dripping from your brow." << endl;
+										cout << "You notice he has dropped a key to the gate in the garden..." << endl;
+										player.setInCombat(false);
 										break;
 									}
-								
-									sanityAttack = critterStorage[i].attackSanity();
-									playerSanity = player.getSanity();
-									playerSanity -= sanityAttack;
-									player.setSanity(playerSanity);
+									if(player.getHealth() <= 0)
+									{
+										checkGameOver(roomStorage, itemStorage, room, player, graphics);
+									}
 								}
-
-							if(critterStorage[i].getHealth() <= 0)
+							}
+						}
+					break;
+				}
+			}
+			
+				else if (room.getCritter() == 101)
+				{
+					for (int i = 0; i < critterStorage.size(); i++)
+					{
+						if (critterStorage[i].getId() == 102)
+						{
+							if (critterStorage[i].getHealth() <= 0)
 							{
-								if(critterStorage[i].getId() == 101)
-								{
-									cout << "Caleb falls to the floor, having succumbed to his injuries." << endl;
-									room.setCritter(0);
-									room.addItem(roomStorage, 111);
-								} 
-								if(critterStorage[i].getId() == 100)
-								{
-									cout << "Alfred lets out a low, weak rasping groan before he dies, his finger pointing accusingly at you." << endl;
-									cout << "A key falls out of his pocket as he passes." << endl;
-									room.setCritter(0);
-									room.addItem(roomStorage, 217);
-									room.addItem(roomStorage, 110);
-								} 
-								if(critterStorage[i].getId() == 102)
-								{
-									cout << "Mr. Brown says something in an unspeakable language that tears at your ears before falling to the ground." << endl;
-									cout << "You notice the key to the ritual door..." << endl;
+								accuseCondition = true;
+							}
+						}	
+					}
+					if (accuseCondition)
+					{
+						if (!player.hasItem(207) || !player.hasItem(216) || !player.hasItem(215))
+						{
+							accuseCondition = false;
+						}
+					}
 
-								} 
+				}
+				else if (room.getCritter() == 102)
+				{
+					if (room.getRoomId() == 32)
+					{
+						accuseCondition = true;
+					}
+				}
+
+				for (int i = 0; i < critterStorage.size(); i++)
+				{
+					if (critterStorage[i].getId() == room.getCritter())
+					{
+						if (!accuseCondition)
+						{
+							critterStorage[i].displayAccuse1();
+						}
+						else
+						{
+							critterStorage[i].displayAccuse2();
+							critterStorage[i].setDV(6);
+							player.setInCombat(true);
+							while(player.getInCombat() == true)
+							{
+								checkGameOver(roomStorage, itemStorage, room, player, graphics);
+
+								int attackResults;
+								int critterHealth;
+								int sanityAttack;
+								int playerHealth, playerSanity;
+								int randomTaunt;
+
+								int coinFlip = rand() % 2;
+								if(coinFlip==0)
+								{
+									attackResults = player.playerAttack();
+									critterHealth = critterStorage[i].getHealth();
+									critterHealth -= attackResults;
+									critterStorage[i].setHealth(critterHealth);
+									cout << "You do " << attackResults << " damage.";
+									cout << critterStorage[i].getName() << " has " << critterStorage[i].getHealth() << " health left." << endl;
+
+								}
+								else
+								{
+									attackResults = critterStorage[i].attackCritter();
+									playerHealth = player.getHealth();
+									playerHealth -= attackResults;
+									player.setHealth(playerHealth);
+									if(critterStorage[i].getId() == 102 && attackResults >= 3)
+									{
+								
+										randomTaunt = (rand() % 3) + 1;
+
+										switch(randomTaunt)
+										{
+											case 1:
+											cout << "The foul curses uttered by Mr. Brown make your sanity slip slightly..." << endl;
+											break;
+
+											case 2:
+											cout << "The One Who Sleeps Shall Devour Your SOUL!, Mr. Brown cries." << endl;
+											break;
+
+											case 3:
+											cout << "When Mr. Brown touches you, you feel your grip on reality loosen." << endl;
+											break;
+
+											default:
+											cout << "You feel like you need to take a long vacation after this..." << endl;
+											break;
+										}
+								
+										sanityAttack = critterStorage[i].attackSanity();
+										playerSanity = player.getSanity();
+										playerSanity -= sanityAttack;
+										player.setSanity(playerSanity);
+									}
+
+								if(critterStorage[i].getHealth() <= 0)
+								{
+									if(critterStorage[i].getId() == 101)
+									{
+										cout << "Caleb falls to the floor, having succumbed to his injuries." << endl;
+										room.setCritter(0);
+										room.addItem(roomStorage, 111);
+									} 
+									if(critterStorage[i].getId() == 100)
+									{
+										cout << "Alfred lets out a low, weak rasping groan before he dies, his finger pointing accusingly at you." << endl;
+										cout << "A key falls out of his pocket as he passes." << endl;
+										room.setCritter(0);
+										room.addItem(roomStorage, 217);
+										room.addItem(roomStorage, 110);
+									} 
+									if(critterStorage[i].getId() == 102)
+									{
+										cout << "Mr. Brown says something in an unspeakable language that tears at your ears before falling to the ground." << endl;
+										cout << "You notice the key to the ritual door..." << endl;
+
+									} 	
 								player.setInCombat(false);
 							}
 
@@ -923,6 +1029,32 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 	
 	}
 		gameOver = false;
+		break;
+
+	case 10: // devcheck (disable before release)
+		if(com2 == "XKCD")
+		cout << "Critter Stats" << endl;
+		for(int i=0; i < critterStorage.size(); i++)
+		{
+			cout << "Critter Name: " << critterStorage[i].getName() << endl;
+			cout << "Critter Damage: " << critterStorage[i].getDV() << endl;
+			cout << "Critter Health: " << critterStorage[i].getDV() << endl;
+			cout << "Critter ID: " << critterStorage[i].getId() << endl;
+		}
+		break;
+
+	case 11: // test death
+		cout << "YOU DIE!" << endl;
+		player.setHealth(-100);
+		checkGameOver(roomStorage, itemStorage, room, player, graphics);
+		exit(1);
+		break;
+
+	case 12: // test insane
+		cout << "YOU GO MAD!" << endl;
+		player.setSanity(-100);
+		checkGameOver(roomStorage, itemStorage, room, player, graphics);
+		exit(1);
 		break;
 
 	case 9999: //quit
@@ -945,12 +1077,14 @@ bool checkGameOver(vector<Room>& roomStorage, vector<Item>& itemStorage, Room & 
 		graphics.deathScreen();
 		cout << "You are dead! Game Over!" << endl;
 		return true;
+		exit(1);
 	}
 	else if(player.getSanity() <=0)
 	{
 		graphics.insanityScreen();
 		cout << "You have lost touch with reality! Game Over!" << endl;
 		return true;
+		exit(1);
 
 	}
 	else if (room.getRoomId() == 0 && player.hasItem(114) )
@@ -964,6 +1098,7 @@ bool checkGameOver(vector<Room>& roomStorage, vector<Item>& itemStorage, Room & 
 		graphics.creditsScreen();
 
 		return true;
+		exit(1);
 
 
 	}
@@ -1045,6 +1180,3 @@ bool quit()
 	}
 	return result;
 }
-
-
-

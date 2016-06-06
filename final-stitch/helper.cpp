@@ -216,7 +216,7 @@ int getIdDrop(vector<Item>& itemStorage, Player player, string keyword)
 }
 
 
-string getItemDescription(vector<Item> &itemStorage, int id)
+string getItemDescription(vector<Item> &itemStorage, int id, Graphics &graphics)
 {
 
 	string description = "";

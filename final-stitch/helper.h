@@ -6,6 +6,7 @@
 #include "room.h"
 #include "player.h"
 #include "critter.h"
+#include "graphics.h"
 
 using namespace std;
 
@@ -18,7 +19,7 @@ int getItemId(vector<Item> &itemStorage, Room &room, string item);
 int getPlayerItemId(vector<Item>& itemStorage, Player & player, string item);
 int getIdGet(vector<Item>& itemStorage, Room room, string keyword);
 int getIdDrop(vector<Item>& itemStorage, Player player, string keyword);
-string getItemDescription(vector<Item>& itemStorage, int id);
+string getItemDescription(vector<Item>& itemStorage, int id, Graphics &graphics);
 int checkLock(vector<Room>& roomStorage, Room & room);
 bool checkLock(vector<Room> &roomStorage, int id);
 void unLock(vector<Room> &roomStorage, int id);

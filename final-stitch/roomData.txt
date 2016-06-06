@@ -9,8 +9,8 @@
 8;Middle Corridor;The middle part of the main corridor. A few pictures seem to be missing.;14;5;9;7;-1;-1;1;1;0;0;0;
 9;Eerie Bathroom;The bathroom is suitably understated, and obviously meant for the guests. It still has a certain level of luxury and beauty though. The Victorian style continues in here. (On the wall, there is a strange writing.);-1;-1;-1;8;-1;-1;1;1;0;0;0;
 10;Kitchen;A beautifully remodelled kitchen, immaculately clean, and modernized.;11;-1;6;12;-1;13;0;0;0;0;0;
-11;Pantry;A well-stocked pantry. It is suitably rustic, and lined with various high-end goods.;-1;10;-1;-1;16;-1;1;0;0;0;100;
-12;Servant's Quarters;This is a sparse and small, but comfortable room. It seems that Alfred much prefers the outdoors to inside comforts.;-1;-1;10;-1;-1;-1;1;0;0;0;0;
+11;Pantry;A well-stocked pantry. It is suitably rustic, and lined with various high-end goods.;-1;10;-1;-1;16;-1;1;0;0;0;0;
+12;Servant's Quarters;This is a sparse and small, but comfortable room. It seems that Alfred much prefers the outdoors to inside comforts.;-1;-1;10;-1;-1;-1;1;0;0;0;100;
 13;Wine Cellar;A large, fully stocked wine cellar.;-1;-1;-1;-1;10;-1;1;0;0;0;0;
 14;Strange Corridor;There is something very off here in this part of the hallway. You almost feel like your steps further into the house gets you nowhere.;14;8;-1;15;-1;-1;1;1;0;0;0;
 15;Study;A vague odor of sandalwood fills the room. The study is cozy and nicely appointed. You could easily take a moment to relax here, but the pervasive sense of dread removes any feelings of lingering.;17;-1;14;16;-1;-1;1;0;0;0;0;

@@ -10,10 +10,26 @@ using namespace std;
 Player::Player()
 {
 	playerHealth = 100;
-	playerSanity = 25;
-	//playerDamage = equippedItem.damageValue;
+	playerSanity = 50;
+	damageValue = 4;
 	hasLight = false;
-	
+	this->playerInventory.push_back(214);
+	this->playerInventory.push_back(217);
+	this->playerInventory.push_back(211);
+	this->playerInventory.push_back(212);
+	this->playerInventory.push_back(209);
+	this->playerInventory.push_back(113);
+	this->playerInventory.push_back(203);
+	this->playerInventory.push_back(210);
+	this->playerInventory.push_back(205);
+	this->playerInventory.push_back(213);
+	this->playerInventory.push_back(9);
+	this->playerInventory.push_back(12);
+	this->playerInventory.push_back(12);
+	this->playerInventory.push_back(32);
+
+
+
 
 }
 
@@ -129,7 +145,7 @@ bool Player::hasItem(int id)
 
 int Player::playerAttack()
 {
-	attack = rand() % 10 + 1;
+	attack = rand() % damageValue + 1;
 }
 
 

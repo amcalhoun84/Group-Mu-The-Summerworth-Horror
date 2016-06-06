@@ -97,6 +97,7 @@ void Room::displayDesc()
 	{
 		Graphics g;
 		g.oneWhoSleeps();
+
 	}
 }
 
@@ -134,6 +135,12 @@ void Room::displayRoomItems(vector<Item>& itemStorage)
 
 void Room::displayDirections()
 {
+
+	if(this->getVisited() == false)
+	{
+		this->setVisited(true); //  as good a place as any to do it!
+	}	
+
 	cout << "Possible Directions to go: ";
 	if (north != -1)
 	{
@@ -205,6 +212,14 @@ int Room::move(string direction)
 	else if (direction == "west")
 	{
 		id = this->west;
+	}
+	else if (direction == "up")
+	{
+		id = this->up;
+	}
+	else if (direction == "down")
+	{
+		id = this->down;
 	}
 	
 	return id;
