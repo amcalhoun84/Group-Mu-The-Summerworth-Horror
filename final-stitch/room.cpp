@@ -114,8 +114,7 @@ void Room::displayCritter(vector<Critter>& critterStorage)
 		{
 			if (critterStorage[i].getId() == this->critter)
 			{
-				cout << "You also see: " << endl;
-				cout << critterStorage[i].getShortDesc() << endl;
+				cout << critterStorage[i].getDesc() << endl;
 			}
 		}
 	}
