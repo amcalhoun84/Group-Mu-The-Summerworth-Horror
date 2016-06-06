@@ -366,6 +366,7 @@ void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage, vector<Cr
 		if (roomStorage[i].getRoomId() == id)
 		{
 			room = roomStorage[i];
+			roomStorage[i].setVisited(true);
 		}
 	}
 
@@ -386,5 +387,4 @@ void displayRoom(vector<Room> &roomStorage, vector<Item> &itemStorage, vector<Cr
 		cout << "It's dark and you can't see anything!" << endl;
 	}
 	
-	room.setVisited(true);
 }
