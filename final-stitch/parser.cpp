@@ -182,14 +182,14 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 			}
 			else
 			{
-				if (room.getDark() && !player.getHasLight())
-				{
-					cout << "You can't see to go anywhere!" << endl;
-					gameOver = false;
-					break;
-				}
-				else
-				{
+				//if (room.getDark() && !player.getHasLight())
+				//{
+					//cout << "You can't see to go anywhere!" << endl;
+					//gameOver = false;
+					//break;
+				//}
+				//else
+				//{
 					if (id == 43)
 					{
 						setCritters(roomStorage);
@@ -197,7 +197,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 					displayRoom(roomStorage, itemStorage, critterStorage, player, room, id);
 					gameOver = false;
 					break;
-				}
+				//}
 			}
 		}
 		
