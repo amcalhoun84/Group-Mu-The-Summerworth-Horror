@@ -328,7 +328,7 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 		
 		id = getIdDrop(itemStorage, player, com2);
 
-		if (id = -1)
+		if (id == -1)
 		{
 			cout << "I don't know what you want to " << com1 << endl;
 			gameOver = false;
@@ -336,11 +336,20 @@ bool callFunction(vector<Room> &roomStorage,vector<Item> &itemStorage, vector<Cr
 		}
 		else
 		{
-			player.setEquippedItem(id);
-			cout << "You equipped " << getItemName(itemStorage, id) << endl;
-			// player.setDamageValue();
-			gameOver = false;
-			break;
+			if (id == 3 || id == 9 || id == 85)
+			{
+				player.setEquippedItem(id);
+				cout << "You equipped " << getItemName(itemStorage, id) << endl;
+				// player.setDamageValue();
+				gameOver = false;
+				break;
+			}
+			else
+			{
+				cout << "You can only equip a weapon." << endl;
+				gameOver = false;
+				break;
+			}
 		}	
 	case 6: //eat 
 			
