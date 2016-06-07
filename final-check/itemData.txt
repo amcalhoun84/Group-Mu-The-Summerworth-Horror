@@ -43,7 +43,7 @@
 43;dresser;A heavy, hand-carved dresser with brass handles and accents.;A hand-carved dresser.;0;0;0;0;0;
 44;queen-sized bed;The bed is unmade and messy, a pillow sits at the foot.;A messy, unmade bed.;0;0;0;0;0;
 45;double-bed;Immaculately made bed, it doesn't look like anyone has slept in it recently.;A neat, double bed.;0;0;0;0;0;
-46;travel poster;Come Travel to Ibiza! The Party Capital of Europe;An Ibiza travel poster;0;0;0;0;0;
+46;travel poster;Come Travel to Ibiza! The Party Capital of Europe;An Ibiza travel poster;0;0;1;0;0;
 47;mannequin;A mannequin for creating dresses and clothing, it is covered in dust and has a number of pins poked into it.;A dusty, old clothiers mannequin.;0;0;0;0;0;
 48;dusty chest;A dusty trunk, it hasn't been opened for years it seems.;A dusty old foot trunk.;0;0;0;0;0;
 49;bookshelves;Bookshelves lined with books, many are first and special editions.;Full bookshelves.;0;0;0;0;0;
